@@ -51,10 +51,5 @@ execute:
     
 
 include-in-header:
-  - file: arquivos_tex/nome_dos_alocados_e_do_cliente.tex # Arrumando para adicionar os autores e o cliente
-  - file: arquivos_tex/outros_detalhes.tex
-
-include-before-body: 
-  - file: arquivos_tex/logo.tex
-  
+  - file: arquivo_tex/nome_dos_alocados_e_do_cliente.tex # Arrumando para adicionar os autores e o cliente
 
