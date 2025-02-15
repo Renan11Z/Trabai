@@ -1,1 +1,1 @@
-sdaklçdasç
+source("source/biblioteca/packages.R")
