@@ -52,4 +52,4 @@ execute:
 
 include-in-header:
   - file: arquivo_tex/nome_dos_alocados_e_do_cliente.tex # Arrumando para adicionar os autores e o cliente
-
+  - file: arquivo_tex/outros_detalhes.tex

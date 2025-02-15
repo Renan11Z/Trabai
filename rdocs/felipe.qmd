@@ -1,12 +1,23 @@
 ---
-title: "felipe - analises 3 e 4"
-format: pdf
-editor: visual
+output-file: "felipe - analises 3 e 4"
 ---
-
 
 ```{r setup}
 source("source/felipe.R")
+```
+
+```{r}
+# Rodar apenas uma vez na vida!
+## Instalando o tinytex(pacote apenas)
+### CRAN version
+#install.packages('tinytex')
+
+### or the development version on GitHub
+#remotes::install_github('rstudio/tinytex')
+
+## Baixando o tinytex
+library(tinytex)
+#tinytex::install_tinytex()
 ```
 
 

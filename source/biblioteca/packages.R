@@ -34,47 +34,6 @@ vector_frequencies <- function(vector) {
   return(frequency)
 }
 
-quadro <- function(dados,t=T){
-  rn=F
-  dados <- dados %>%
-    select_if(is.numeric)
-  tabela <- skim(dados)
-  tabela <- as.data.frame(tabela)
-  tabela <- tabela %>% 
-    select(!c(1,3:4,12)) %>%
-    mutate(
-      numeric.mean = round(numeric.mean,2),
-      numeric.sd = round(numeric.sd,2),
-      numeric.p0 = round(numeric.p0,2),
-      numeric.p25 = round(numeric.p25,2),
-      numeric.p50 = round(numeric.p50,2),
-      numeric.p75 = round(numeric.p75,2),
-      numeric.p100 = round(numeric.p100,2),
-      di = numeric.p75-numeric.p25,
-      di = round(di,2)
-    )
-  colnames(tabela) <- c("Categoria",
-                        "Média","Desvio padrão",
-                        "Mínimo","q25","Mediana","q75","Máximo","D I")
-  if (t == T){
-    tabela <- as.data.frame(t(tabela))
-    colnames(tabela) <- tabela[1,]
-    tabela <- tabela[-1,]
-    rn=T
-  }
-  tabela <- tabela %>%
-    mutate_if(is.character, function(x) {
-      as.numeric(x)
-    })
-  
-  tabela <- tabela %>%
-    mutate_if(is.numeric, function(x) {
-      format(x, decimal.mark = ",")
-    })
-  
-  print(xtable(tabela, type = "latex"), include.rownames=rn)
-}
-
 # Remover eixos do gráfico coroplético
 no_axis <- theme(axis.title=element_blank(),
                  axis.text=element_blank(),
