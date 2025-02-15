@@ -4,8 +4,7 @@ library(readxl)
 library(ggplot2)
 library(tidyverse)
 library(RColorBrewer)
-Dados<-read_excel("C:/Users/marqu/Documents/UNB/2 semestre/Trabalho/Trabai/Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
-
+Dados<-read_excel("Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
 ####Gráfico do Local da escola
 Dados[c(Dados[,4]==1),4]<-"Urbana"
 Dados[c(Dados[,4]==2),4]<-"Rural"
@@ -31,3 +30,47 @@ G1<-ggplot(c_L) +
 
 #####################analise 3#########
 formula
+#############analise 8##################
+D8<-Dados[Dados[,9]<75,]
+c2 <- table(D8$REG, D8$LOCAL)%>%
+  data.frame() %>%
+  mutate(Pct = Freq / sum(Freq))
+
+ordem1=c("NE","SE","N","S","CO")
+ordem2=c("Urbana","Rural")
+
+porcentagens <- str_c(round(c2$Pct*100, digits = 2), "%") %>% str_replace("
+\\.", ",")
+
+legendas <- str_squish(str_c(c2$Freq, " (", porcentagens, ")")
+)
+
+GA8<-ggplot(c2) +
+  aes(
+    x = factor(Var2,level=ordem2),
+    y = Pct,
+    fill = factor(Var1,level=ordem1), label=legendas
+  ) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_brewer(name = "Local") +
+  scale_y_continuous(
+    limits = c(0, .35), expand = c(0, 0), breaks = seq(0, .3, .05),
+    labels = paste0(seq(0, 30, 5), "%")
+  ) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 3
+  )+
+  labs(x = "Local", y = "Frequência Relativa") + theme_bw()
+
+ggplot(mpg) +
+  aes(x = class) +
+  geom_bar(aes(y = prop.table(..count..) * 100), fill = "#A11D21") +
+  geom_text(aes(
+    y = prop.table(..count..) * 100 + 0.5,
+    label = paste0(gsub("\\.", ",", round(prop.table(..count..) * 100, 2)), "%")
+  ),
+  stat = "count", vjust = 0, size = 4
+  ) +
+  labs(x = "Classe do automóvel", y = "Frequência Relativa") 
