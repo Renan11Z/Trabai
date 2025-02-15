@@ -1,4 +1,4 @@
-source("source/biblioteca/packages.R")
+source("rdocs/source/packages.R")
 
 #Banco de dados 
 Amostra_g09_200 <- read_excel(

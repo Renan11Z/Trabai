@@ -1,9 +1,9 @@
 ---
-output-file: "felipe - analises 3 e 4"
+output-file: "felipe - analises 2, 5 e 9"
 ---
 
 ```{r setup}
-source("source/felipe.R")
+source("rdocs/felipe.R")
 ```
 
 ```{r}

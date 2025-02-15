@@ -7,10 +7,10 @@ output-file: "trabalho_final"
 
 ```{r}
 #| include: false
-source("source/biblioteca/packages.R")
-source("source/felipe.R")
-source("source/renan.R")
-source("source/victor.R")
+source("rdocs/source/packages.R")
+source("rdocs/felipe.R")
+source("rdocs/victor.R")
+source("rdocs/renan.R")
 ```
 
 # Introdução

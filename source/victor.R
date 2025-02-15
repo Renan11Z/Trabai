@@ -1,1 +1,0 @@
-source("source/biblioteca/packages.R")

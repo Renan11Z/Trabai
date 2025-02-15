@@ -1,9 +1,9 @@
 ---
-output-file: "renan - analises 6 e 7"
+output-file: "renan - analises 3, 4 e 8"
 ---
 
 ```{r setup}
-source("source/renan.R")
+source("rdocs/renan.R")
 ```
 
 ```{r}
