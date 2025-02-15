@@ -1,4 +1,4 @@
-source("source/biblioteca/packages.R")
+source("rdocs/source/packages.R")
 
 library(readxl)
 library(ggplot2)
