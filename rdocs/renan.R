@@ -74,3 +74,12 @@ ggplot(mpg) +
   stat = "count", vjust = 0, size = 4
   ) +
   labs(x = "Classe do automóvel", y = "Frequência Relativa") 
+
+#alpha = 0,95
+#Estimador de LP
+miLP <- round((mean(Dados$NOTA_LP) - (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
+msLP <- round((mean(Dados$NOTA_LP) + (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
+
+#Estimador de MT
+miMT <- round((mean(Dados$NOTA_MT) - (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
+msMT <- round((mean(Dados$NOTA_MT) + (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)

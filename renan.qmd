@@ -21,3 +21,6 @@ library(tinytex)
 ```
 
 #Desenvolvimento 
+
+##Analise 3
+
