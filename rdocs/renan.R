@@ -4,7 +4,10 @@ library(readxl)
 library(ggplot2)
 library(tidyverse)
 library(RColorBrewer)
+library(patchwork)
+
 Dados<-read_excel("Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
+###Analise 1###########
 ####Gráfico do Local da escola
 Dados[c(Dados[,4]==1),4]<-"Urbana"
 Dados[c(Dados[,4]==2),4]<-"Rural"
@@ -28,8 +31,56 @@ G1<-ggplot(c_L) +
   theme_void() +
   theme(legend.position = "top") + scale_fill_brewer("Local", palette = "Blues")
 
+#####Boxplot das notas
+G2.1<-ggplot(Dados) +
+  aes(
+    x = factor(""),
+    y = NOTA_LP
+  ) +
+  geom_boxplot(fill = c("blue"), width = 0.5) +
+  guides(fill = none) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "", y = "Nota") 
+G2.2<-ggplot(Dados) +
+  aes(
+    x = factor(""),
+    y = NOTA_MT
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = none) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "", y = "Nota")
+G2<-G2.1+G2.2
+#######
+G3<-ggplot(Dados) +
+  aes(x = REG) +
+  geom_bar(aes(y = prop.table(..count..) * 100), fill = "lightblue") +
+  geom_text(aes(
+    y = prop.table(..count..) * 100 + 0.5,
+    label = paste0(gsub("\\.", ",", round(prop.table(..count..) * 100, 2)), "%")
+  ),
+  stat = "count", vjust = 0, size = 4
+  ) +
+  labs(x = "Região", y = "Frequência Relativa")
+
 #####################analise 3#########
-formula
+#alpha = 0,95
+#Estimador de LP
+miLP <- round((mean(Dados$NOTA_LP) - (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
+msLP <- round((mean(Dados$NOTA_LP) + (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
+
+#Estimador de MT
+miMT <- round((mean(Dados$NOTA_MT) - (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
+msMT <- round((mean(Dados$NOTA_MT) + (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
+#########################Analise 4#########
+((sd(Dados$NOTA_LP)/sqrt(200))*1.645)+(184.3)
+mean(Dados$NOTA_LP)
+((sd(Dados$NOTA_MT)/sqrt(200))*1.645)+(204.3)
+mean(Dados$NOTA_MT)
 #############analise 8##################
 D8<-Dados[Dados[,9]<75,]
 c2 <- table(D8$REG, D8$LOCAL)%>%
@@ -64,22 +115,6 @@ GA8<-ggplot(c2) +
   )+
   labs(x = "Local", y = "Frequência Relativa") + theme_bw()
 
-ggplot(mpg) +
-  aes(x = class) +
-  geom_bar(aes(y = prop.table(..count..) * 100), fill = "#A11D21") +
-  geom_text(aes(
-    y = prop.table(..count..) * 100 + 0.5,
-    label = paste0(gsub("\\.", ",", round(prop.table(..count..) * 100, 2)), "%")
-  ),
-  stat = "count", vjust = 0, size = 4
-  ) +
-  labs(x = "Classe do automóvel", y = "Frequência Relativa") 
+ 
 
-#alpha = 0,95
-#Estimador de LP
-miLP <- round((mean(Dados$NOTA_LP) - (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
-msLP <- round((mean(Dados$NOTA_LP) + (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
 
-#Estimador de MT
-miMT <- round((mean(Dados$NOTA_MT) - (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
-msMT <- round((mean(Dados$NOTA_MT) + (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
