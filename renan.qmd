@@ -20,17 +20,21 @@ library(tinytex)
 #tinytex::install_tinytex()
 ```
 
-#Desenvolvimento 
+# Desenvolvimento 
+
 ```{r}
 G1
 G3
 ```
 
-##Analise 3  
-Está analise tem como objetivo estimar a média das notas de portugues e matematica na população do estudo. Para isso, foram utilizadas as variaveis "NOTA_LP" e "NOTA_MT", ambas quantitativas contínuas. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.  
+
+## Análise 3
+
+Esta análise tem como objetivo estimar a média das notas de portugues e matematica na população do estudo. Para isso, foram utilizadas as variaveis "NOTA_LP" e "NOTA_MT", ambas quantitativas contínuas. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.  
 O intervalo de confiança de 95% obtido para a média da nota de portugues foi $mi_1\in$ (183.76;190.39) e o para a média de matematica foi $mi_2\in$ (202.90;210.65).    
 
-##Analise 4  
+## Analise 4
+
 Nessa análise buscou-se verificar se houve melhora do resultado da Prova Brasil de 2009 para 2011. Na Prova de 2009 a média em língua portuguesa foi de 184.3 e a de matemática foi de 204.3. Para isso foi feitos dois testes de hipótese, 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?   
 Hipóteses do primeiro teste:$H_0) mi_1=184,3$,$H_1)mi_1>184,3$. Estatística do teste: $T=X-184,3/23.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade. Região Critica para $a$=5%: $mi_1>187.08$
 Conclusão: como a média amostral foi de 187.07, não rejeitaremos $H_0$, entretanto, por estar bem próxima da região crítica, seria necessário estudar mais afundo para afirmar esse resultado.
@@ -40,11 +44,14 @@ Conclusão: como a média amostral foi de 206.77, não rejeitaremos $H_0$.
 
 Em suma, nã houve melhora das notas.
 
-##Analise 8   
+## Analise 8
+
 Nesta análise comparou-se a proporção das escolas que menos de 75% de seus estudantes participaram da Prova Brasil em 2011 em relação ao local da escola e a região de localização da escola. Para isso foram utilizadas as variáveis "LOCAL" e "REG, ambas qualitativas nominais. Espera-se que as proporções mantenham a proporção geral da amostra.
+
 ```{r}
 GA8
 ```
+
 
 Como pode ser observado, 80% dessas escolas são da região urbana e a maioria (60%) são do Nordeste ou do Sudeste. O que vai de acordo com a proporção geral, em que 81.5% são da região urbana e 67.5% são da região Nordeste ou Sudeste.
 

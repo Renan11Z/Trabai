@@ -11,10 +11,134 @@ Amostra_g09_50 <- Amostra_g09_200[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
 
 # Análise 2 - Estimar proporção média < 75% de participação
 
-p <- Amostra_g09_200[Amostra_g09_200$PARTICIPACAO<=75,9]
-p75 <- length(p)/length(Amostra_g09_200$PARTICIPACAO)
+p200 <- Amostra_g09_200[Amostra_g09_200$PARTICIPACAO<=75,9]
+p75 <- length(p200)/length(Amostra_g09_200$PARTICIPACAO)
 
 p0 <- round((p75 - ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTICIPACAO))
                      )), 2)
 p1 <- round((p75 + ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTICIPACAO))
 )), 2)
+
+p50 <- Amostra_g09_50[Amostra_g09_50$PARTICIPACAO<=75,9]
+
+p750 <- length(p50)/length(Amostra_g09_50$PARTICIPACAO)
+
+p00 <- round((p750 - ( 1.96 * sqrt((p750 * (1 - p750))/ length(Amostra_g09_50$PARTICIPACAO))
+)), 2)
+
+p11 <- round((p750 + ( 1.96 * sqrt((p750 * (1 - p750))/ length(Amostra_g09_50$PARTICIPACAO))
+)), 2)
+
+# Análise 5 - LP e MAT são normalmente distribuídas?
+#teste de aderência 
+
+média_LP200 <- round(mean(Amostra_g09_200$NOTA_LP), 2)
+variância_LP200 <- round(var(Amostra_g09_200$NOTA_LP), 2)
+
+chisq.test(Amostra_g09_200$NOTA_LP, média_LP200)
+
+
+# Análise 9 - a) associação entre região e categoria administrativa 
+
+analise_9a <- Amostra_g09_200[,c(3,6)]
+
+analise_9a[analise_9a$ADM==1,2] <- "Federal"
+analise_9a[analise_9a$ADM==2,2] <- "Estadual"
+analise_9a[analise_9a$ADM==3,2] <- "Municipal"
+
+#grafico 9 
+
+a_9a <- analise_9a %>%
+  mutate(ADM = case_when(
+    ADM %>% str_detect("Estadual") ~ "Estadual",
+    ADM %>% str_detect("Municipal") ~ "Municipal"
+  )) %>%
+  group_by(ADM, REG) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
+
+porcentagens <- str_c(a_9a$freq_relativa, "%") %>% str_replace("\\.", ",")
+
+legendas <- str_squish(str_c(a_9a$freq, " (", porcentagens, ")"))
+
+ggplot(a_9a) +
+  aes(
+    x = fct_reorder(ADM, freq, .desc = T),
+    y = freq,
+    fill = REG,
+    label = legendas
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 3
+  ) +
+  labs(x = "Categoria Administrativa", y = "Frequência") + 
+  theme_bw()
+
+chisq.test(analise_9a$REG, analise_9a$ADM)
+
+x2_9a <- 11.51
+
+C_9a <- sqrt(x2_9 / (x2_9 + 200))
+
+Cmax_9a <- sqrt(1/2)
+
+Cmod_9a <- C_9/Cmax_9
+
+#associação de fraca a moderada
+
+#Analise 9 - b) associação tamanho da escola e tamanho do municipio
+
+analise_9b <- Amostra_g09_200[,c(5,7)]
+
+analise_9b$TAM_ESCOLA <- as.character(analise_9b$TAM_ESCOLA)
+analise_9b$TAM_MUN <- as.character(analise_9b$TAM_MUN)
+
+analise_9b[analise_9b$TAM_ESCOLA==1,2] <- "<25"
+analise_9b[analise_9b$TAM_ESCOLA==2,2] <- "25 a 49"
+analise_9b[analise_9b$TAM_ESCOLA==3,2] <- "50 a 99"
+analise_9b[analise_9b$TAM_ESCOLA==4,2] <- "100 ou mais"
+
+analise_9b[analise_9b$TAM_MUN==1,1] <- "<20000 hab"
+analise_9b[analise_9b$TAM_MUN==2,1] <- "20000 a 49999 hab"
+analise_9b[analise_9b$TAM_MUN==3,1] <- "50000 a 99999 hab"
+analise_9b[analise_9b$TAM_MUN==4,1] <- "100000 a 999999 hab"
+analise_9b[analise_9b$TAM_MUN==5,1] <- "1000000 ou mais"
+
+a_9b <- analise_9b %>%
+  mutate(TAM_MUN = case_when(
+    TAM_MUN %>% str_detect("<20000 hab") ~ "<20000 hab",
+    TAM_MUN %>% str_detect("20000 a 49999 hab") ~ "20000 a 49999 hab",
+    TAM_MUN %>% str_detect("50000 a 99999 hab") ~ "50000 a 99999 hab",
+    TAM_MUN %>% str_detect("100000 a 999999 hab") ~ "100000 a 999999 hab",
+    TAM_MUN %>% str_detect("1000000 ou mais") ~ "1000000 ou mais"
+  )) %>%
+  group_by(TAM_MUN, TAM_ESCOLA) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
+
+porcentagens_b <- str_c(a_9b$freq_relativa, "%") %>% str_replace("\\.", ",")
+
+legendas_b <- str_squish(str_c(a_9b$freq, " (", porcentagens, ")"))
+
+ggplot(a_9b) +
+  aes(
+    x = fct_reorder(TAM_MUN, freq, .desc = T),
+    y = freq,
+    fill = TAM_ESCOLA,
+    label = legendas_b
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 3
+  ) +
+  labs(x = "Categoria Administrativa", y = "Frequência") + 
+  theme_bw()
