@@ -9,6 +9,26 @@ Amostra_g09_50 <- Amostra_g09_200[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
                                     78, 77, 68,65,63, 60, 55, 52, 51, 48, 37, 35,
                                     33, 31, 21, 19, 17, 13, 12, 8, 7, 6),]
 
+# Análise 1 - Análise descritiva das escolas e do desempenhos dos alunos
+
+# gráfico hist das notas
+
+ggplot(Amostra_g09_200) +
+  aes(x = NOTA_LP) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
+  theme_bw()
+
+ggplot(Amostra_g09_200) +
+  aes(x = NOTA_MT) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
+  theme_bw()
+
+# região e cat administrativa
+
+
+
 # Análise 2 - Estimar proporção média < 75% de participação
 
 p200 <- Amostra_g09_200[Amostra_g09_200$PARTICIPACAO<=75,9]
@@ -76,7 +96,8 @@ ggplot(a_9a) +
     vjust = -0.5, hjust = 0.5,
     size = 3
   ) +
-  labs(x = "Categoria Administrativa", y = "Frequência") + 
+  labs(x = "Categoria Administrativa", y = "Frequência") +
+  scale_fill_brewer("Região", palette = "Blues") +
   theme_bw()
 
 chisq.test(analise_9a$REG, analise_9a$ADM)
@@ -99,29 +120,46 @@ analise_9b$TAM_ESCOLA <- as.character(analise_9b$TAM_ESCOLA)
 analise_9b$TAM_MUN <- as.character(analise_9b$TAM_MUN)
 
 analise_9b[analise_9b$TAM_ESCOLA==1,2] <- "<25"
-analise_9b[analise_9b$TAM_ESCOLA==2,2] <- "25 a 49"
-analise_9b[analise_9b$TAM_ESCOLA==3,2] <- "50 a 99"
-analise_9b[analise_9b$TAM_ESCOLA==4,2] <- "100 ou mais"
+analise_9b[analise_9b$TAM_ESCOLA==2,2] <- "25-49"
+analise_9b[analise_9b$TAM_ESCOLA==3,2] <- "50-99"
+analise_9b[analise_9b$TAM_ESCOLA==4,2] <- "100+"
 
-analise_9b[analise_9b$TAM_MUN==1,1] <- "<20000 hab"
-analise_9b[analise_9b$TAM_MUN==2,1] <- "20000 a 49999 hab"
-analise_9b[analise_9b$TAM_MUN==3,1] <- "50000 a 99999 hab"
-analise_9b[analise_9b$TAM_MUN==4,1] <- "100000 a 999999 hab"
-analise_9b[analise_9b$TAM_MUN==5,1] <- "1000000 ou mais"
+analise_9b[analise_9b$TAM_MUN==1,1] <- "<20000"
+analise_9b[analise_9b$TAM_MUN==2,1] <- "20000-49999"
+analise_9b[analise_9b$TAM_MUN==3,1] <- "50000-99999"
+analise_9b[analise_9b$TAM_MUN==4,1] <- "100000-999999"
+analise_9b[analise_9b$TAM_MUN==5,1] <- "1000000+"
 
 a_9b <- analise_9b %>%
   mutate(TAM_MUN = case_when(
-    TAM_MUN %>% str_detect("<20000 hab") ~ "<20000 hab",
-    TAM_MUN %>% str_detect("20000 a 49999 hab") ~ "20000 a 49999 hab",
-    TAM_MUN %>% str_detect("50000 a 99999 hab") ~ "50000 a 99999 hab",
-    TAM_MUN %>% str_detect("100000 a 999999 hab") ~ "100000 a 999999 hab",
-    TAM_MUN %>% str_detect("1000000 ou mais") ~ "1000000 ou mais"
+    TAM_MUN %>% str_detect("<20000") ~ "<20000",
+    TAM_MUN %>% str_detect("20000-49999") ~ "20000-49999",
+    TAM_MUN %>% str_detect("50000-99999") ~ "50000-99999",
+    TAM_MUN %>% str_detect("100000-999999") ~ "100000-999999",
+    TAM_MUN %>% str_detect("1000000+") ~ "1000000+"
   )) %>%
   group_by(TAM_MUN, TAM_ESCOLA) %>%
   summarise(freq = n()) %>%
   mutate(
     freq_relativa = freq %>% percent()
   )
+
+nova_linha <- data.frame(TAM_MUN = "1000000+", TAM_ESCOLA = "<25",
+                         freq = 0, freq_relativa = 0.00)
+
+a_9b <- rbind(a_9b, nova_linha)
+
+a_9b$TAM_MUN <- factor(a_9b$TAM_MUN, levels = c("<20000", "20000-49999", 
+                                                "50000-99999", "100000-999999",
+                                                "1000000+"),
+                       labels = c("<20000", "20000-49999", 
+                                  "50000-99999", "100000-999999",
+                                  "1000000+"))
+
+a_9b$TAM_ESCOLA <- factor(a_9b$TAM_ESCOLA, levels = c("<25", "25-49", "50-99",
+                                                      "100+"),
+                          labels = c("<25", "25-49", "50-99",
+                                     "100+"))
 
 porcentagens_b <- str_c(a_9b$freq_relativa, "%") %>% str_replace("\\.", ",")
 
@@ -131,14 +169,9 @@ ggplot(a_9b) +
   aes(
     x = fct_reorder(TAM_MUN, freq, .desc = T),
     y = freq,
-    fill = TAM_ESCOLA,
-    label = legendas_b
+    fill = TAM_ESCOLA
   ) +
   geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
-  geom_text(
-    position = position_dodge(width = .9),
-    vjust = -0.5, hjust = 0.5,
-    size = 3
-  ) +
-  labs(x = "Categoria Administrativa", y = "Frequência") + 
+  labs(x = "Categoria Administrativa", y = "Frequência") +
+  scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
   theme_bw()
