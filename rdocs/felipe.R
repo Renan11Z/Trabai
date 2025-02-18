@@ -25,6 +25,8 @@ ggplot(Amostra_g09_200) +
   labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
   theme_bw()
 
+
+
 # região e cat administrativa
 
 
@@ -55,7 +57,7 @@ p11 <- round((p750 + ( 1.96 * sqrt((p750 * (1 - p750))/ length(Amostra_g09_50$PA
 média_LP200 <- round(mean(Amostra_g09_200$NOTA_LP), 2)
 variância_LP200 <- round(var(Amostra_g09_200$NOTA_LP), 2)
 
-chisq.test(Amostra_g09_200$NOTA_LP, média_LP200)
+chisq.test(Amostra_g09_200$NOTA_LP, )
 
 
 # Análise 9 - a) associação entre região e categoria administrativa 
@@ -144,34 +146,47 @@ a_9b <- analise_9b %>%
     freq_relativa = freq %>% percent()
   )
 
-nova_linha <- data.frame(TAM_MUN = "1000000+", TAM_ESCOLA = "<25",
-                         freq = 0, freq_relativa = 0.00)
+a_9b <- a_9b %>%
+  mutate(TAM_ESCOLA = case_when(
+    TAM_ESCOLA %in% c("<25", "25-49") ~ "<50",  
+    TRUE ~ TAM_ESCOLA  
+  ))
 
-a_9b <- rbind(a_9b, nova_linha)
 
-a_9b$TAM_MUN <- factor(a_9b$TAM_MUN, levels = c("<20000", "20000-49999", 
-                                                "50000-99999", "100000-999999",
-                                                "1000000+"),
-                       labels = c("<20000", "20000-49999", 
-                                  "50000-99999", "100000-999999",
-                                  "1000000+"))
+a_9b$TAM_ESCOLA <- factor(a_9b$TAM_ESCOLA, 
+                          levels = c("<50", "50-99", "100+"),
+                          labels = c("<50", "50-99", "100+"),
+                          ordered = TRUE) 
 
-a_9b$TAM_ESCOLA <- factor(a_9b$TAM_ESCOLA, levels = c("<25", "25-49", "50-99",
-                                                      "100+"),
-                          labels = c("<25", "25-49", "50-99",
-                                     "100+"))
+a_9b$TAM_MUN <- factor(a_9b$TAM_MUN, 
+                       levels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       labels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       ordered = TRUE)
+
+a_9b <- a_9b %>%
+  arrange(TAM_MUN, TAM_ESCOLA)
+
+a_9b <- a_9b %>%
+  drop_na()
 
 porcentagens_b <- str_c(a_9b$freq_relativa, "%") %>% str_replace("\\.", ",")
 
-legendas_b <- str_squish(str_c(a_9b$freq, " (", porcentagens, ")"))
+legendas_b <- str_squish(str_c(a_9b$freq, " (", porcentagens_b, ")"))
 
 ggplot(a_9b) +
   aes(
-    x = fct_reorder(TAM_MUN, freq, .desc = T),
+    x = TAM_MUN,  
     y = freq,
-    fill = TAM_ESCOLA
+    fill = TAM_ESCOLA,
+    label = legendas_b
   ) +
   geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
-  labs(x = "Categoria Administrativa", y = "Frequência") +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 2.5
+  ) +
+  labs(x = "Tamanho dos Municípios", y = "Frequência") +
   scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
   theme_bw()
+
