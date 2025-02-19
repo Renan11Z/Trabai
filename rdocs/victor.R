@@ -5,7 +5,6 @@ library(ggplot2)
 library(tidyr)
 library(psych)
 
-#carregar dados
 
 dados<-read_excel("C:/Users/DESKTOP/Downloads/Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
 dados50 <- dados[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
@@ -38,18 +37,19 @@ t.test(dados$NOTA_LP, dados$NOTA_MT, paired = TRUE)
 t.test(dados50$NOTA_LP, dados50$NOTA_MT, paired = TRUE)
 variancia_lp <- var(dados$NOTA_LP, na.rm = TRUE)
 variancia_mt <- var(dados$NOTA_MT, na.rm = TRUE)
-
-ggplot(mpg) +
+novo= pivot_longer(dados, cols = c("NOTA_LP", "NOTA_MT"),
+                   names_to = "Disciplina", values_to = "Nota")
+ggplot(novo) +
   aes(
-    x = trans,
-    y = cty
+    x = novo$Disciplina,
+    y = novo$Nota
   ) +
-  geom_boxplot(fill = c("#A11D21"), width = 0.5) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
   stat_summary(
     fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
   ) +
   labs(x = "Transmissão", y = "Consumo em Cidade (milhas/galão)") +
-  theme_estat()
+  theme_bw()
 
 
 # 10. Associação entre notas de Língua Portuguesa e Matemática
@@ -63,4 +63,3 @@ ggplot(dados, aes(x = dados$NOTA_LP, y = dados$NOTA_MT)) +
     y = "Notas em Matemática"
   ) +
   theme_bw()
-
