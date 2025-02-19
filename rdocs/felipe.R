@@ -26,11 +26,6 @@ ggplot(Amostra_g09_200) +
   theme_bw()
 
 
-
-# região e cat administrativa
-
-
-
 # Análise 2 - Estimar proporção média < 75% de participação
 
 p200 <- Amostra_g09_200[Amostra_g09_200$PARTICIPACAO<=75,9]
@@ -57,7 +52,27 @@ p11 <- round((p750 + ( 1.96 * sqrt((p750 * (1 - p750))/ length(Amostra_g09_50$PA
 média_LP200 <- round(mean(Amostra_g09_200$NOTA_LP), 2)
 variância_LP200 <- round(var(Amostra_g09_200$NOTA_LP), 2)
 
-chisq.test(Amostra_g09_200$NOTA_LP, )
+analise_51 <- Amostra_g09_200[,10]
+
+
+classes <- seq(min(Amostra_g09_200$NOTA_LP), max(Amostra_g09_200$NOTA_LP), by = 20)
+
+
+freq_obs <- table(cut(Amostra_g09_200$NOTA_LP, breaks = classes))
+
+
+n <- length(Amostra_g09_200$NOTA_LP)
+media <- mean(Amostra_g09_200$NOTA_LP)
+desvio <- sd(Amostra_g09_200$NOTA_LP)
+
+
+probs <- pnorm(classes, mean = media, sd = desvio)
+probs <- diff(probs)  
+
+freq_esp <- probs * n
+
+
+chisq.test(freq_obs, p = probs, rescale.p = TRUE)
 
 
 # Análise 9 - a) associação entre região e categoria administrativa 
