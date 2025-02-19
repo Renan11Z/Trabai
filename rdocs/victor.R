@@ -18,9 +18,49 @@ dados50 <- dados[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
 
 t.test(NOTA_MT ~ LOCAL, data = dados)
 t.test(NOTA_MT~ LOCAL, data = dados50)
+
+ggplot(dados) +
+  aes(
+    x =dados$LOCAL,
+    y = dados$NOTA_MT
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = FALSE) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "Local", y = "Nota em Matemática") +
+  theme_bw()
+
+
 # 7. Diferença significativa entre notas de Língua Portuguesa e Matemática
 t.test(dados$NOTA_LP, dados$NOTA_MT, paired = TRUE)
 t.test(dados50$NOTA_LP, dados50$NOTA_MT, paired = TRUE)
+variancia_lp <- var(dados$NOTA_LP, na.rm = TRUE)
+variancia_mt <- var(dados$NOTA_MT, na.rm = TRUE)
+
+ggplot(mpg) +
+  aes(
+    x = trans,
+    y = cty
+  ) +
+  geom_boxplot(fill = c("#A11D21"), width = 0.5) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "Transmissão", y = "Consumo em Cidade (milhas/galão)") +
+  theme_estat()
+
+
 # 10. Associação entre notas de Língua Portuguesa e Matemática
 cor.test(dados$NOTA_LP, dados$NOTA_MT)
 cor.test(dados50$NOTA_LP, dados50$NOTA_MT)
+
+ggplot(dados, aes(x = dados$NOTA_LP, y = dados$NOTA_MT)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Notas em Português",
+    y = "Notas em Matemática"
+  ) +
+  theme_bw()
+
