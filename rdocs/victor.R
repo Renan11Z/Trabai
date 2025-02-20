@@ -1,5 +1,5 @@
 source("rdocs/source/packages.R")
-
+library(tidyverse)
 
 dados<-read_excel(
   "Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
@@ -79,7 +79,7 @@ ggplot(novo50) +
   stat_summary(
     fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
   ) +
-  labs(x = "Transmissão", y = "Consumo em Cidade (milhas/galão)") +
+  labs(x = "Matérias", y = "Notas") +
   theme_bw()
 
 
