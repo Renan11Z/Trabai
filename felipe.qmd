@@ -20,24 +20,10 @@ library(tinytex)
 #tinytex::install_tinytex()
 ```
 
+# Desenvolvimento 
 
-## Quarto
+## Estimação da proporção média menor que 75% de participação 
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Esta análise tem como intenção estimar a proporção de todos os estudantes que obtiveram uma participação média menor que 95% em todas as provas realizadas. Para isso foi utilizada a variável "Participação", sendo esta quantitativa contínua. 
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
+O intervalo de confiança de 95% obtido para a proporção média menor que 75% de participação foi $p\in$ (0,04; 0,11) para a amostra com 200 observações e $p\in$ (0; 0,16) para a amostra com 50 observações.
