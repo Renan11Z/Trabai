@@ -47,6 +47,14 @@ ggplot(Amostra_g09_200, aes(x = PARTICIPACAO, y = ID)) +
   )+
   theme_bw()
 
+ggplot(Amostra_g09_50, aes(x = PARTICIPACAO, y = ID)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Participação",
+    y = "ID das Escolas"
+  )+
+  theme_bw()
+
 # Análise 2 - Estimar proporção média < 75% de participação
 
 p200 <- Amostra_g09_200[Amostra_g09_200$PARTICIPACAO<=75,9]
@@ -146,9 +154,15 @@ chisq.test(freq_obs_MT50, p = probs_MT50, rescale.p = TRUE)
 
 analise_9a <- Amostra_g09_200[,c(3,6)]
 
+analise_9a50 <- Amostra_g09_50[,c(3,6)]
+
 analise_9a[analise_9a$ADM==1,2] <- "Federal"
 analise_9a[analise_9a$ADM==2,2] <- "Estadual"
 analise_9a[analise_9a$ADM==3,2] <- "Municipal"
+
+analise_9a50[analise_9a50$ADM==1,2] <- "Federal"
+analise_9a50[analise_9a50$ADM==2,2] <- "Estadual"
+analise_9a50[analise_9a50$ADM==3,2] <- "Municipal"
 
 #grafico 9 
 
@@ -163,11 +177,26 @@ a_9a <- analise_9a %>%
     freq_relativa = freq %>% percent()
   )
 
+a_9a50 <- analise_9a50 %>%
+  mutate(ADM = case_when(
+    ADM %>% str_detect("Estadual") ~ "Estadual",
+    ADM %>% str_detect("Municipal") ~ "Municipal"
+  )) %>%
+  group_by(ADM, REG) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
+
 porcentagens <- str_c(a_9a$freq_relativa, "%") %>% str_replace("\\.", ",")
+
+porcentagens_a50 <- str_c(a_9a50$freq_relativa, "%") %>% str_replace("\\.", ",")
 
 legendas <- str_squish(str_c(a_9a$freq, " (", porcentagens, ")"))
 
-ggplot(a_9a) +
+legendas_a50 <- str_squish(str_c(a_9a50$freq, " (", porcentagens, ")"))
+
+grafico9a <- ggplot(a_9a) +
   aes(
     x = fct_reorder(ADM, freq, .desc = T),
     y = freq,
@@ -178,7 +207,24 @@ ggplot(a_9a) +
   geom_text(
     position = position_dodge(width = .9),
     vjust = -0.5, hjust = 0.5,
-    size = 3
+    size = 2
+  ) +
+  labs(x = "Categoria Administrativa", y = "Frequência") +
+  scale_fill_brewer("Região", palette = "Blues") +
+  theme_bw()
+
+grafico9a50 <- ggplot(a_9a50) +
+  aes(
+    x = fct_reorder(ADM, freq, .desc = T),
+    y = freq,
+    fill = REG,
+    label = legendas_a50
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 2
   ) +
   labs(x = "Categoria Administrativa", y = "Frequência") +
   scale_fill_brewer("Região", palette = "Blues") +
@@ -193,6 +239,16 @@ C_9a <- sqrt(x2_9a / (x2_9a + 200))
 Cmax_9a <- sqrt(1/2)
 
 Cmod_9a <- C_9a/Cmax_9a
+
+chisq.test(analise_9a50$REG, analise_9a50$ADM)
+
+x2_9a50 <- 6.98
+
+C_9a50 <- sqrt(x2_9a50 / (x2_9a50 + 200))
+
+Cmax_9a50 <- sqrt(1/2)
+
+Cmod_9a50 <- C_9a50/Cmax_9a50
 
 #associação de fraca a moderada
 
@@ -271,3 +327,13 @@ ggplot(a_9b) +
   labs(x = "Tamanho dos Municípios", y = "Frequência") +
   scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
   theme_bw()
+
+chisq.test(analise_9b$TAM_MUN, analise_9b$TAM_ESCOLA)
+
+x2_9b <- 30
+
+C_9b <- sqrt(x2_9b / (x2_9b + 200))
+
+Cmax_9b <- sqrt(1/2)
+
+Cmod_9b <- C_9b/Cmax_9b

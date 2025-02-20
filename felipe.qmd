@@ -67,3 +67,29 @@ Estatística do Teste: $X^2=\sum_{i=1}^{6}((O_i-E_i)^2)\div{E_i}$, Qui-Quadrado 
 Região Crítica para $a$=5%: $X^2_1<0,8312$  e $X^2_2>12,8325$
 
 Conclusão: A estatística do teste obteve um valor de $X^2=1,6651$, assim não rejeitando $H_0$. O p-valor também aponta para a não rejeição de $H_0$, com um valor de 0,8933.
+
+## Verificando se existe associção entre algumas variáveis
+
+Esta análise tem como intenção verificar se existe associção entre algumas variáveis presentes na amostra. Sendo assim, esta análise será segmentada em duas a fim de facilitar a compreensão e a leitura. 
+
+### Associação entre região e categoria administrativa
+
+A fim de verificar a existência de uma associação entre as variáveis "Região", qualitativa nominal, e "Categoria administrativa", qualitativa ordinal, foi feito gráfico a seguir. 
+
+```{r}
+#| label: fig-grafico9a200
+#| fig-cap: "Gráfico de colunas da região pela categoria administrativa para amostra de 200"
+grafico9a
+```
+
+```{r}
+#| label: fig-grafico9a50
+#| fig-cap: "Gráfico de colunas da região pela categoria administrativa para amostra de 50"
+grafico9a50
+```
+
+
+Como pode ser observado na $\ref{fig-grafico9a200}$ e $\ref{fig-grafico9a50}$, existem mais observações presentes na categoria "Municipal", totalizando 161 observações, mais que o quadrúplo da categoria "Estadual". Vale a pena ser ressaltado que ambas categorias, a região "Sudeste" é a que apresenta mais observações. Na categoria "Municipal", pode-se observar uma grande quantidade de observações na região "Nordeste" com um total de 53. Para verificar a associação entre as variáveis foi utilizado o Coeficiente de Contingência Modificado, este que possui um valor entre 0 e 1 com valores próximos de 0 demonstrando uma associação fraca e valores próximos de 1 uma associação forte. Na análise em questão, obteve um valor de $C^*$=0,33 para a amostra de 200, apresentando uma associação de fraca a moderada entre as variáveis e $C^*$=0,26 para a amostra de 50, apresentando uma associação de fraca a moderada entre as variáveis, mas menor que a amostra de 200.
+
+### Associação entre tamanho da escola e tamanho do município 
+
