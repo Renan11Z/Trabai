@@ -27,6 +27,7 @@ G1
 G3
 ```
 
+<<<<<<< Updated upstream
 
 ## Análise 3
 
@@ -38,13 +39,45 @@ O intervalo de confiança de 95% obtido para a média da nota de portugues foi $
 Nessa análise buscou-se verificar se houve melhora do resultado da Prova Brasil de 2009 para 2011. Na Prova de 2009 a média em língua portuguesa foi de 184.3 e a de matemática foi de 204.3. Para isso foi feitos dois testes de hipótese, 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?   
 Hipóteses do primeiro teste:$H_0) mi_1=184,3$,$H_1)mi_1>184,3$. Estatística do teste: $T=X-184,3/23.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade. Região Critica para $a$=5%: $mi_1>187.08$
 Conclusão: como a média amostral foi de 187.07, não rejeitaremos $H_0$, entretanto, por estar bem próxima da região crítica, seria necessário estudar mais afundo para afirmar esse resultado.
+=======
+##Analise 3  
 
-Hipóteses do segundo teste:$H_0) mi_1=204.3$,$H_1)mi_1>204.3$. Estatística do teste: $T=X-204.3/27.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade. Região Critica para $a$=5%: $mi_1>207.55$
-Conclusão: como a média amostral foi de 206.77, não rejeitaremos $H_0$.
+Está analise tem como objetivo estimar a média das notas de portugues e matematica na população do estudo. Para isso, foram utilizadas as variaveis "NOTA_LP" e "NOTA_MT", ambas quantitativas contínuas. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.  
+O intervalo de confiança de 95% obtido para a média da nota de português foi $mi_1\in$ (183.76;190.39) e o para a média de matematica foi $mi_2\in$ (202.90;210.65).
+Para a amostra de tamanho 50, por ser uma amostra menor, os intervalos de confiança de 95% para as notas são maiores: para a média da nota de português foi $mi_1\in$ (179.48;194.46) e o para a média de matematica foi $mi_2\in$ (199.82;216.64).
 
-Em suma, nã houve melhora das notas.
+##Analise 4  
+>>>>>>> Stashed changes
 
+Nessa análise buscou-se verificar se houve melhora do resultado da Prova Brasil de 2009 para 2011. Na Prova de 2009 a média em língua portuguesa foi de 184.3 e a de matemática foi de 204.3. Para isso foi feitos dois testes de hipótese: 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?   
+Hipóteses do primeiro teste:$H_0) mi_1=184,3$,$H_1)mi_1>184,3$. 
+Estatística do teste: $T=X-184,3/23.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade. 
+Região Critica para $a$=5%: $mi_1>187.08$
+Conclusão: como a média amostral foi de 187.07, não rejeitaremos $H_0$, entretanto, por estar bem próxima da região crítica, seria necessário estudar mais afundo para afirmar esse resultado. O P-valor deu 0.0516, que é maior porém bem próximo de  0,05, o que contribui para não rejeitar $H_0$.
+
+Hipóteses do segundo teste:$H_0) mi_1=204.3$,$H_1)mi_1>204.3$. 
+Estatística do teste: $T=X-204.3/27.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade. 
+Região Critica para $a$=5%: $mi_1>207.55$
+Conclusão: como a média amostral foi de 206.77, não rejeitaremos $H_0$. O P-valor deu 0.1056 que é maior que 0,05, o que contribui para não rejeitar $H_0$.
+
+Para a Amostra de tamanho 50, o processo foi similar: testes de hipótese: 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?
+Hipóteses do primeiro teste:$H_0) mi_1=184,3 $,$H_1)mi_1>184,3$. 
+Estatística do teste: $T=X-184,3/26.3\div \sqrt{50}$ tem distribuição de student com 49 graus de liberdade. 
+Região Critica para $a$=5%: $mi_1>190.55$
+Conclusão: Como a média amostral foi de 186.96, não rejeitamos $H_0$. O P-valor deu aproximadamente 0,2 que é maior que 0,5, o que contribui para não rejeitar $H_0$.
+
+Hipóteses do segundo teste:$H_0) mi_1=204.3$,$H_1)mi_1>204.3$. 
+Estatística do teste: $T=X-204.3/29.5\div \sqrt{50}$ tem distribuição de student com 49 graus de liberdade. 
+Região Critica para $a$=5%: $mi_1>211.31$
+Conclusão: Como a média amostral foi de 208.23, não rejeitamos $H_0$.
+
+Em suma, em ambas as amostras não houve melhora das notas. O P-valor deu aproximadamente 0,15 que é maior que 0,5, o que contribui para não rejeitar $H_0$.
+
+<<<<<<< Updated upstream
 ## Analise 8
+=======
+##Analise 8   
+>>>>>>> Stashed changes
 
 Nesta análise comparou-se a proporção das escolas que menos de 75% de seus estudantes participaram da Prova Brasil em 2011 em relação ao local da escola e a região de localização da escola. Para isso foram utilizadas as variáveis "LOCAL" e "REG, ambas qualitativas nominais. Espera-se que as proporções mantenham a proporção geral da amostra.
 

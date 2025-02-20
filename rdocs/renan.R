@@ -12,6 +12,12 @@ Dados<-read_excel("Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
 Dados[c(Dados[,4]==1),4]<-"Urbana"
 Dados[c(Dados[,4]==2),4]<-"Rural"
 
+Amostra50 <- Dados[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
+                                    154,147, 145, 144, 143, 141, 139, 132, 127,
+                                    117, 116, 111 , 99, 98, 96, 95, 90, 88, 79,
+                                    78, 77, 68,65,63, 60, 55, 52, 51, 48, 37, 35,
+                                    33, 31, 21, 19, 17, 13, 12, 8, 7, 6),]
+
 c_L <- Dados %>%
   group_by(LOCAL) %>%
   summarise(Freq = n()) %>%
@@ -72,15 +78,28 @@ G3<-ggplot(Dados) +
 #Estimador de LP
 miLP <- round((mean(Dados$NOTA_LP) - (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
 msLP <- round((mean(Dados$NOTA_LP) + (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
+#Amostra50
+AiLP<- round((mean(Amostra50$NOTA_LP) - (2.0096 * sd(Amostra50$NOTA_LP)/sqrt(50))), 2)
+AsLP<- round((mean(Amostra50$NOTA_LP) + (2.0096 * sd(Amostra50$NOTA_LP)/sqrt(50))), 2)
 
 #Estimador de MT
 miMT <- round((mean(Dados$NOTA_MT) - (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
 msMT <- round((mean(Dados$NOTA_MT) + (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
+#Amostra50
+AiMT<-round((mean(Amostra50$NOTA_MT) - (2.0096 * sd(Amostra50$NOTA_MT)/sqrt(50))), 2)
+AsMT<-round((mean(Amostra50$NOTA_MT) + (2.0096 * sd(Amostra50$NOTA_MT)/sqrt(50))), 2)
+
 #########################Analise 4#########
 ((sd(Dados$NOTA_LP)/sqrt(200))*1.645)+(184.3)
 mean(Dados$NOTA_LP)
 ((sd(Dados$NOTA_MT)/sqrt(200))*1.645)+(204.3)
 mean(Dados$NOTA_MT)
+
+#Amostra50
+((sd(Amostra50$NOTA_LP)/sqrt(50))*1.6766)+(184.3)
+mean(Amostra50$NOTA_LP)
+((sd(Amostra50$NOTA_MT)/sqrt(50))*1.6766)+(204.3)
+mean(Amostra50$NOTA_MT)
 #############analise 8##################
 D8<-Dados[Dados[,9]<75,]
 c2 <- table(D8$REG, D8$LOCAL)%>%
@@ -115,6 +134,10 @@ GA8<-ggplot(c2) +
   )+
   labs(x = "Local", y = "Frequência Relativa") + theme_bw()
 
- 
+#A5
+D8A5<-Amostra50[Amostra50[,9]<75,]
+c2A5 <- table(D8A5$REG, D8A5$LOCAL)%>%
+  data.frame() %>%
+  mutate(Pct = Freq / sum(Freq))
 
 
