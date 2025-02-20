@@ -73,6 +73,81 @@ G3<-ggplot(Dados) +
   ) +
   labs(x = "Região", y = "Frequência Relativa")
 
+###Graf de tam mun
+c_L2 <- Dados %>%
+  group_by(TAM_MUN) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(TAM_MUN)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+G4<-ggplot(c_L2) +
+  aes(x = factor(""), y = Prop , fill = factor(TAM_MUN)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("TAM_MUN", palette = "Blues")
+
+##Graf ADM 
+
+c_L3 <- Dados %>%
+  group_by(ADM) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(ADM)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+G5<-ggplot(c_L3) +
+  aes(x = factor(""), y = Prop , fill = factor(ADM)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("ADM", palette = "Blues")
+
+##Graf tam esc
+
+c_L4 <- Dados %>%
+  group_by(TAM_ESCOLA) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(TAM_ESCOLA)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+G6<-ggplot(c_L4) +
+  aes(x = factor(""), y = Prop , fill = factor(TAM_ESCOLA)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("TAM_ESCOLA", palette = "Blues")
+
+##matriculados
+G7<-ggplot(Dados) +
+  aes(
+    x = factor(""),
+    y = MATRICULADOS
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = none) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "", y = "Matriculados") 
+
 #####################analise 3#########
 #alpha = 0,95
 #Estimador de LP

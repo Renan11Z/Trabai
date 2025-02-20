@@ -25,6 +25,10 @@ library(tinytex)
 ```{r}
 G1
 G3
+G4
+G5
+G6
+G7
 ```
 
 <<<<<<< Updated upstream
