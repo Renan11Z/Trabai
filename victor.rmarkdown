@@ -21,7 +21,9 @@ library(tinytex)
 
 ```
 
+
 # Desenvolvimento 
+
 
 ```{=latex}
 	\begin{tabular} { | l |
@@ -63,5 +65,4 @@ library(tinytex)
 	\hline
 	\end{tabular}
 ```
-
 

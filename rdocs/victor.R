@@ -68,6 +68,8 @@ ggplot(novo) +
   labs(x = "Matérias", y = "Notas") +
   theme_bw()
 
+
+
 ## n=50
 t.test(dados50$NOTA_LP, dados50$NOTA_MT, paired = TRUE)
 novo50= pivot_longer(dados50, cols = c("NOTA_LP", "NOTA_MT"),
