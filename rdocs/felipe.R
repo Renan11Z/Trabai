@@ -256,8 +256,13 @@ Cmod_9a50 <- C_9a50/Cmax_9a50
 
 analise_9b <- Amostra_g09_200[,c(5,7)]
 
+analise_9b50 <- Amostra_g09_50[,c(5,7)]
+
 analise_9b$TAM_ESCOLA <- as.character(analise_9b$TAM_ESCOLA)
 analise_9b$TAM_MUN <- as.character(analise_9b$TAM_MUN)
+
+analise_9b50$TAM_ESCOLA <- as.character(analise_9b50$TAM_ESCOLA)
+analise_9b50$TAM_MUN <- as.character(analise_9b50$TAM_MUN)
 
 analise_9b[analise_9b$TAM_ESCOLA==1,2] <- "<25"
 analise_9b[analise_9b$TAM_ESCOLA==2,2] <- "25-49"
@@ -269,6 +274,17 @@ analise_9b[analise_9b$TAM_MUN==2,1] <- "20000-49999"
 analise_9b[analise_9b$TAM_MUN==3,1] <- "50000-99999"
 analise_9b[analise_9b$TAM_MUN==4,1] <- "100000-999999"
 analise_9b[analise_9b$TAM_MUN==5,1] <- "1000000+"
+
+analise_9b50[analise_9b50$TAM_ESCOLA==1,2] <- "<25"
+analise_9b50[analise_9b50$TAM_ESCOLA==2,2] <- "25-49"
+analise_9b50[analise_9b50$TAM_ESCOLA==3,2] <- "50-99"
+analise_9b50[analise_9b50$TAM_ESCOLA==4,2] <- "100+"
+
+analise_9b50[analise_9b50$TAM_MUN==1,1] <- "<20000"
+analise_9b50[analise_9b50$TAM_MUN==2,1] <- "20000-49999"
+analise_9b50[analise_9b50$TAM_MUN==3,1] <- "50000-99999"
+analise_9b50[analise_9b50$TAM_MUN==4,1] <- "100000-999999"
+analise_9b50[analise_9b50$TAM_MUN==5,1] <- "1000000+"
 
 a_9b <- analise_9b %>%
   mutate(TAM_MUN = case_when(
@@ -284,19 +300,37 @@ a_9b <- analise_9b %>%
     freq_relativa = freq %>% percent()
   )
 
-a_9b <- a_9b %>%
-  mutate(TAM_ESCOLA = case_when(
-    TAM_ESCOLA %in% c("<25", "25-49") ~ "<50",  
-    TRUE ~ TAM_ESCOLA  
-  ))
+a_9b50 <- analise_9b50 %>%
+  mutate(TAM_MUN = case_when(
+    TAM_MUN %>% str_detect("<20000") ~ "<20000",
+    TAM_MUN %>% str_detect("20000-49999") ~ "20000-49999",
+    TAM_MUN %>% str_detect("50000-99999") ~ "50000-99999",
+    TAM_MUN %>% str_detect("100000-999999") ~ "100000-999999",
+    TAM_MUN %>% str_detect("1000000+") ~ "1000000+"
+  )) %>%
+  group_by(TAM_MUN, TAM_ESCOLA) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
 
 
 a_9b$TAM_ESCOLA <- factor(a_9b$TAM_ESCOLA, 
-                          levels = c("<50", "50-99", "100+"),
-                          labels = c("<50", "50-99", "100+"),
-                          ordered = TRUE) 
+                          levels = c("<25", "25-49", "50-99", "100+"),
+                          labels = c("<25", "25-49", "50-99", "100+"),
+                          ordered = TRUE)
+
+a_9b50$TAM_ESCOLA <- factor(a_9b50$TAM_ESCOLA, 
+                          levels = c("<25", "25-49", "50-99", "100+"),
+                          labels = c("<25", "25-49", "50-99", "100+"),
+                          ordered = TRUE)
 
 a_9b$TAM_MUN <- factor(a_9b$TAM_MUN, 
+                       levels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       labels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       ordered = TRUE)
+
+a_9b50$TAM_MUN <- factor(a_9b50$TAM_MUN, 
                        levels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
                        labels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
                        ordered = TRUE)
@@ -304,14 +338,24 @@ a_9b$TAM_MUN <- factor(a_9b$TAM_MUN,
 a_9b <- a_9b %>%
   arrange(TAM_MUN, TAM_ESCOLA)
 
+a_9b50 <- a_9b50 %>%
+  arrange(TAM_MUN, TAM_ESCOLA)
+
 a_9b <- a_9b %>%
+  drop_na()
+
+a_9b50 <- a_9b50 %>%
   drop_na()
 
 porcentagens_b <- str_c(a_9b$freq_relativa, "%") %>% str_replace("\\.", ",")
 
+porcentagens_b50 <- str_c(a_9b50$freq_relativa, "%") %>% str_replace("\\.", ",")
+
 legendas_b <- str_squish(str_c(a_9b$freq, " (", porcentagens_b, ")"))
 
-ggplot(a_9b) +
+legendas_b50 <- str_squish(str_c(a_9b50$freq, " (", porcentagens_b50, ")"))
+
+grafico9b200 <- ggplot(a_9b) +
   aes(
     x = TAM_MUN,  
     y = freq,
@@ -322,7 +366,24 @@ ggplot(a_9b) +
   geom_text(
     position = position_dodge(width = .9),
     vjust = -0.5, hjust = 0.5,
-    size = 2.5
+    size = 1.2
+  ) +
+  labs(x = "Tamanho dos Municípios", y = "Frequência") +
+  scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
+  theme_bw()
+
+grafico9b50 <- ggplot(a_9b50) +
+  aes(
+    x = TAM_MUN,  
+    y = freq,
+    fill = TAM_ESCOLA,
+    label = legendas_b50
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 1.2
   ) +
   labs(x = "Tamanho dos Municípios", y = "Frequência") +
   scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
@@ -330,10 +391,20 @@ ggplot(a_9b) +
 
 chisq.test(analise_9b$TAM_MUN, analise_9b$TAM_ESCOLA)
 
-x2_9b <- 30
+x2_9b <- 32.87
 
 C_9b <- sqrt(x2_9b / (x2_9b + 200))
 
-Cmax_9b <- sqrt(1/2)
+Cmax_9b <- sqrt(3/4)
 
 Cmod_9b <- C_9b/Cmax_9b
+
+chisq.test(analise_9b50$TAM_MUN, analise_9b50$TAM_ESCOLA)
+
+x2_9b50 <- 7.95
+
+C_9b50 <- sqrt(x2_9b50 / (x2_9b50 + 200))
+
+Cmax_9b50 <- sqrt(3/4)
+
+Cmod_9b50 <- C_9b50/Cmax_9b50
