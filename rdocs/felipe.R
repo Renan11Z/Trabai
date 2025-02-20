@@ -19,16 +19,23 @@ ggplot(Amostra_g09_200) +
   labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
   theme_bw()
 
+ggplot(Amostra_g09_50) +
+  aes(x = NOTA_LP) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
+  theme_bw()
+
 ggplot(Amostra_g09_200) +
   aes(x = NOTA_MT) +
   geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
   labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
   theme_bw()
 
-
-
-# região e cat administrativa
-
+ggplot(Amostra_g09_50) +
+  aes(x = NOTA_MT) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
+  theme_bw()
 
 
 # Análise 2 - Estimar proporção média < 75% de participação
@@ -40,6 +47,8 @@ p0 <- round((p75 - ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTI
                      )), 2)
 p1 <- round((p75 + ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTICIPACAO))
 )), 2)
+
+
 
 p50 <- Amostra_g09_50[Amostra_g09_50$PARTICIPACAO<=75,9]
 
@@ -54,11 +63,75 @@ p11 <- round((p750 + ( 1.96 * sqrt((p750 * (1 - p750))/ length(Amostra_g09_50$PA
 # Análise 5 - LP e MAT são normalmente distribuídas?
 #teste de aderência 
 
-média_LP200 <- round(mean(Amostra_g09_200$NOTA_LP), 2)
-variância_LP200 <- round(var(Amostra_g09_200$NOTA_LP), 2)
+## teste para LP -> amostra de 200 
+classes_LP200 <- seq(min(Amostra_g09_200$NOTA_LP), max(Amostra_g09_200$NOTA_LP),
+                  by = 20)
 
-chisq.test(Amostra_g09_200$NOTA_LP, )
+freq_obs_LP200 <- table(cut(Amostra_g09_200$NOTA_LP, breaks = classes_LP200))
 
+n_LP200 <- length(Amostra_g09_200$NOTA_LP)
+media_LP200 <- mean(Amostra_g09_200$NOTA_LP)
+desvio_LP200 <- sd(Amostra_g09_200$NOTA_LP)
+
+probs_LP200 <- pnorm(classes_LP200, mean = media_LP200, sd = desvio_LP200)
+probs_LP200 <- diff(probs_LP200)  
+
+freq_esp_LP200 <- probs_LP200 * n
+
+chisq.test(freq_obs_LP200, p = probs_LP200, rescale.p = TRUE)
+
+## teste para LP -> amostra de 50 
+classes_LP50 <- seq(min(Amostra_g09_50$NOTA_LP), max(Amostra_g09_50$NOTA_LP),
+                     by = 20)
+
+freq_obs_LP50 <- table(cut(Amostra_g09_50$NOTA_LP, breaks = classes_LP50))
+
+n_LP50 <- length(Amostra_g09_50$NOTA_LP)
+media_LP50 <- mean(Amostra_g09_50$NOTA_LP)
+desvio_LP50 <- sd(Amostra_g09_50$NOTA_LP)
+
+probs_LP50 <- pnorm(classes_LP50, mean = media_LP50, sd = desvio_LP50)
+probs_LP50 <- diff(probs_LP50)  
+
+freq_esp_LP50 <- probs_LP50 * n
+
+chisq.test(freq_obs_LP50, p = probs_LP50, rescale.p = TRUE)
+
+## teste para MT -> amostra de 200 
+
+classes_MT200 <- seq(min(Amostra_g09_200$NOTA_MT), max(Amostra_g09_200$NOTA_MT),
+                     by = 20)
+
+freq_obs_MT200 <- table(cut(Amostra_g09_200$NOTA_MT, breaks = classes_MT200))
+
+n_MT200 <- length(Amostra_g09_200$NOTA_MT)
+media_MT200 <- mean(Amostra_g09_200$NOTA_MT)
+desvio_MT200 <- sd(Amostra_g09_200$NOTA_MT)
+
+probs_MT200 <- pnorm(classes_MT200, mean = media_MT200, sd = desvio_MT200)
+probs_MT200 <- diff(probs_MT200)  
+
+freq_esp_MT200 <- probs_MT200 * n
+
+chisq.test(freq_obs_MT200, p = probs_MT50, rescale.p = TRUE)
+
+## teste para MT -> amostra de 50 
+
+classes_MT50 <- seq(min(Amostra_g09_50$NOTA_MT), max(Amostra_g09_50$NOTA_MT),
+                     by = 20)
+
+freq_obs_MT50 <- table(cut(Amostra_g09_50$NOTA_MT, breaks = classes_MT50))
+
+n_MT50 <- length(Amostra_g09_50$NOTA_MT)
+media_MT50 <- mean(Amostra_g09_50$NOTA_MT)
+desvio_MT50 <- sd(Amostra_g09_50$NOTA_MT)
+
+probs_MT50 <- pnorm(classes_MT50, mean = media_MT50, sd = desvio_MT50)
+probs_MT50 <- diff(probs_MT50)  
+
+freq_esp_MT50 <- probs_MT50 * n
+
+chisq.test(freq_obs_MT50, p = probs_MT50, rescale.p = TRUE)
 
 # Análise 9 - a) associação entre região e categoria administrativa 
 
