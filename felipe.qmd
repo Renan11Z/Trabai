@@ -24,6 +24,46 @@ library(tinytex)
 
 ## Estimação da proporção média menor que 75% de participação 
 
-Esta análise tem como intenção estimar a proporção de todos os estudantes que obtiveram uma participação média menor que 95% em todas as provas realizadas. Para isso foi utilizada a variável "Participação", sendo esta quantitativa contínua. 
+Esta análise tem como intenção estimar a proporção de todas as escoals que obtiveram uma participação média menor que 95% em todas as provas realizadas. Para isso foi utilizada a variável "Participação", sendo esta quantitativa contínua. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.
 
 O intervalo de confiança de 95% obtido para a proporção média menor que 75% de participação foi $p\in$ (0,04; 0,11) para a amostra com 200 observações e $p\in$ (0; 0,16) para a amostra com 50 observações.
+
+## As notas de Língua Portuguesa e Matemática são normalmente distribuídas 
+
+Nessa análise tem o intuito descobrir se as notas de Língua Portuguesa e Matemática aderem ao modelo de distribuição normal. Foram utilizados para a confecção desta análise as variáveis "Nota Língua Portuguesa" e "Nota Matemática", ambas quantitativas contínuas. Para isso foi necessário estimar a média e a desvio padrão de ambas as matérias, sendo estas, 187,08 de média e 23,91 de desvio padrão para Língua Portuguesa para a amostra de 200 obversavações; 186,97 de média e 26,37 de desvio padrão para Língua Portuguesa para a amostra de 50 observações; 206, 78 de média e 27,97 de desvio padrão para Matemática para a amostra de 200 observações; 208,23 de média e 29,60 de desvio padrão para Matemática para a amostra 50 observações. Para isso foi feito os testes de hipótese: 1°) A Nota de Língua Portuguesa adere a distribuição normal?; 2°) A Nota de Matemática adere a distribuição normal?
+
+Primeiramente serão analisadas as amostras com 200 observações.
+
+Hipóteses primeiro teste: $H_0)$ Nota de Língua Portuguesa segue o modelo de distribuição normal; $H_1)$ Nota de Língua Portuguesa não segue o modelo de distribuição normal.
+
+Estatística do Teste: $X^2=\sum_{i=1}^{6}((O_i-E_i)^2)\div{E_i}$, Qui-Quadrado com 5 graus de liberdade.
+
+Região Crítica para $a$=5%: $X^2_1<0,8312$  e $X^2_2>12,8325$
+
+Conclusão: Como o valor obtido pela estatística do teste foi de $X^2=5,2896$, $H_0$ não será rejeitada. Utilizando o p-valor, a conclusão é a mesma, obtendo um valor de 0,3816, ainda não rejeitando $H_0$.
+
+Hipóteses segundo teste: $H_0)$ Nota de Matemática segue o modelo de distribuição normal; $H_1)$ Nota de Matemática não segue o modelo de distribuição normal.
+
+Estatística do Teste: $X^2=\sum_{i=1}^{7}((O_i-E_i)^2)\div{E_i}$, Qui-Quadrado com 6 graus de liberdade.
+
+Região Crítica para $a$=5%: $X^2_1<1,2373$ e $X^2_2>14,4494$
+
+Conclusão: O valor obtido para estatística do teste foi de $X^2=4,1033$, $H_0$ não será rejeitada. O p-valor também aponta para a não rejeição de $H_0$, com o valor de 0,6627.
+
+Será analizado de forma semelhante as amostras de 50 observações.
+
+Hipóteses primeiro teste: $H_0)$ Nota de Língua Portuguesa segue o modelo de distribuição normal; $H_1)$ Nota de Língua Portuguesa não segue o modelo de distribuição normal.
+
+Estatística do Teste: $X^2=\sum_{i=1}^{5}((O_i-E_i)^2)\div{E_i}$, Qui-Quadrado com 4 graus de liberdade.
+
+Região Crítica para $\alpha$=5%: $X^2_1<0,4844$ e $X^2_2>11,1433$
+
+Conclusão: O valor obtido para estatística do teste foi de $X^2=3,5847$, $H_0$ não será rejeitada. O p-valor também aponta para a não rejeição de $H_0$, com valor de 0,4651.
+
+Hipóteses segundo teste: $H_0)$ Nota de Matemática segue o modelo de distribuição normal; $H_1)$ Nota de Matemática não segue o modelo de distribuição normal.
+
+Estatística do Teste: $X^2=\sum_{i=1}^{6}((O_i-E_i)^2)\div{E_i}$, Qui-Quadrado com 5 graus de liberdade.
+
+Região Crítica para $a$=5%: $X^2_1<0,8312$  e $X^2_2>12,8325$
+
+Conclusão: A estatística do teste obteve um valor de $X^2=1,6651$, assim não rejeitando $H_0$. O p-valor também aponta para a não rejeição de $H_0$, com um valor de 0,8933.

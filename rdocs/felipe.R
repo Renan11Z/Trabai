@@ -39,8 +39,13 @@ ggplot(Amostra_g09_50) +
 
 # gráfico de dispersão da participação 
 
-
-
+ggplot(Amostra_g09_200, aes(x = PARTICIPACAO, y = ID)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Participação",
+    y = "ID das Escolas"
+  )+
+  theme_bw()
 
 # Análise 2 - Estimar proporção média < 75% de participação
 
