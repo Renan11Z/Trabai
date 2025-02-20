@@ -18,6 +18,7 @@ source("rdocs/victor.R")
 ## Baixando o tinytex
 library(tinytex)
 #tinytex::install_tinytex()
+
 ```
 
 # Desenvolvimento 
