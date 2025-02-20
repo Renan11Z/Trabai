@@ -22,3 +22,46 @@ library(tinytex)
 ```
 
 # Desenvolvimento 
+
+```{=latex}
+	\begin{tabular} { | l |
+			S[table-format = 2.2]
+			S[table-format = 2.2]
+			|}
+	\hline
+		\textbf{Estatística} & \textbf{Urbana} & \textbf{Rural} \\
+		\hline
+		Média & 211.11 & 187.7 \\
+		Desvio Padrão & 26.85 & 24.91 \\
+		Variância & 721.03 & 620.34 \\
+		Mínimo & 151.58 & 140.71 \\
+		1º Quartil & 190.91  & 166.83 \\
+		Mediana & 209.56 & 191.47 \\
+		3º Quartil & 231.82 & 208.62 \\
+		Máximo & 282.63 & 238.48 \\
+	\hline
+	\end{tabular}
+
+```
+
+```{=latex}
+	\begin{tabular} { | l |
+			S[table-format = 2.2]
+			S[table-format = 2.2]
+			|}
+	\hline
+		\textbf{Estatística} & \textbf{Mat} & \textbf{Por} \\
+		\hline
+		Média & 206.78 & 187.08 \\
+		Desvio Padrão & 27.97 & 23.91 \\
+		Variância & 782.22 & 571.7 \\
+		Mínimo & 140.71 & 129.97 \\
+		1º Quartil & 186.92 & 170.76 \\
+		Mediana & 206.43 & 184.64 \\
+		3º Quartil & 227.12 & 206.14 \\
+		Máximo & 282.63 & 251.18 \\
+	\hline
+	\end{tabular}
+```
+
+
