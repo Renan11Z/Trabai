@@ -37,6 +37,10 @@ ggplot(Amostra_g09_50) +
   labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
   theme_bw()
 
+# gráfico de dispersão da participação 
+
+
+
 
 # Análise 2 - Estimar proporção média < 75% de participação
 
@@ -47,7 +51,6 @@ p0 <- round((p75 - ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTI
                      )), 2)
 p1 <- round((p75 + ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTICIPACAO))
 )), 2)
-
 
 
 p50 <- Amostra_g09_50[Amostra_g09_50$PARTICIPACAO<=75,9]
@@ -74,9 +77,10 @@ media_LP200 <- mean(Amostra_g09_200$NOTA_LP)
 desvio_LP200 <- sd(Amostra_g09_200$NOTA_LP)
 
 probs_LP200 <- pnorm(classes_LP200, mean = media_LP200, sd = desvio_LP200)
+
 probs_LP200 <- diff(probs_LP200)  
 
-freq_esp_LP200 <- probs_LP200 * n
+freq_esp_LP200 <- probs_LP200 * n_LP200
 
 chisq.test(freq_obs_LP200, p = probs_LP200, rescale.p = TRUE)
 
@@ -93,7 +97,7 @@ desvio_LP50 <- sd(Amostra_g09_50$NOTA_LP)
 probs_LP50 <- pnorm(classes_LP50, mean = media_LP50, sd = desvio_LP50)
 probs_LP50 <- diff(probs_LP50)  
 
-freq_esp_LP50 <- probs_LP50 * n
+freq_esp_LP50 <- probs_LP50 * n_LP50
 
 chisq.test(freq_obs_LP50, p = probs_LP50, rescale.p = TRUE)
 
@@ -111,9 +115,9 @@ desvio_MT200 <- sd(Amostra_g09_200$NOTA_MT)
 probs_MT200 <- pnorm(classes_MT200, mean = media_MT200, sd = desvio_MT200)
 probs_MT200 <- diff(probs_MT200)  
 
-freq_esp_MT200 <- probs_MT200 * n
+freq_esp_MT200 <- probs_MT200 * n_MT200
 
-chisq.test(freq_obs_MT200, p = probs_MT50, rescale.p = TRUE)
+chisq.test(freq_obs_MT200, p = probs_MT200, rescale.p = TRUE)
 
 ## teste para MT -> amostra de 50 
 
@@ -129,7 +133,7 @@ desvio_MT50 <- sd(Amostra_g09_50$NOTA_MT)
 probs_MT50 <- pnorm(classes_MT50, mean = media_MT50, sd = desvio_MT50)
 probs_MT50 <- diff(probs_MT50)  
 
-freq_esp_MT50 <- probs_MT50 * n
+freq_esp_MT50 <- probs_MT50 * n_MT50
 
 chisq.test(freq_obs_MT50, p = probs_MT50, rescale.p = TRUE)
 
@@ -179,11 +183,11 @@ chisq.test(analise_9a$REG, analise_9a$ADM)
 
 x2_9a <- 11.51
 
-C_9a <- sqrt(x2_9 / (x2_9 + 200))
+C_9a <- sqrt(x2_9a / (x2_9a + 200))
 
 Cmax_9a <- sqrt(1/2)
 
-Cmod_9a <- C_9/Cmax_9
+Cmod_9a <- C_9a/Cmax_9a
 
 #associação de fraca a moderada
 
@@ -262,4 +266,3 @@ ggplot(a_9b) +
   labs(x = "Tamanho dos Municípios", y = "Frequência") +
   scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
   theme_bw()
-
