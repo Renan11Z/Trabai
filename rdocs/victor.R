@@ -27,6 +27,9 @@ ggplot(dados) +
   labs(x = "Local", y = "Nota em Matemática") +
   theme_bw()
 
+dadost1<-dados[dados[,4]=="Urbana",]
+dadost2<-dados[dados[,4]=="Rural",]
+
 ## n=50
 t.test(NOTA_MT~ LOCAL, data = dados50)
 dados50$LOCAL <- recode(dados50$LOCAL, "1" = "Urbana", "2" = "Rural")
