@@ -37,6 +37,23 @@ ggplot(Amostra_g09_50) +
   labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
   theme_bw()
 
+# gráfico de dispersão da participação 
+
+ggplot(Amostra_g09_200, aes(x = PARTICIPACAO, y = ID)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Participação",
+    y = "ID das Escolas"
+  )+
+  theme_bw()
+
+ggplot(Amostra_g09_50, aes(x = PARTICIPACAO, y = ID)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Participação",
+    y = "ID das Escolas"
+  )+
+  theme_bw()
 
 # Análise 2 - Estimar proporção média < 75% de participação
 
@@ -47,7 +64,6 @@ p0 <- round((p75 - ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTI
                      )), 2)
 p1 <- round((p75 + ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTICIPACAO))
 )), 2)
-
 
 
 p50 <- Amostra_g09_50[Amostra_g09_50$PARTICIPACAO<=75,9]
@@ -74,9 +90,10 @@ media_LP200 <- mean(Amostra_g09_200$NOTA_LP)
 desvio_LP200 <- sd(Amostra_g09_200$NOTA_LP)
 
 probs_LP200 <- pnorm(classes_LP200, mean = media_LP200, sd = desvio_LP200)
+
 probs_LP200 <- diff(probs_LP200)  
 
-freq_esp_LP200 <- probs_LP200 * n
+freq_esp_LP200 <- probs_LP200 * n_LP200
 
 chisq.test(freq_obs_LP200, p = probs_LP200, rescale.p = TRUE)
 
@@ -93,7 +110,7 @@ desvio_LP50 <- sd(Amostra_g09_50$NOTA_LP)
 probs_LP50 <- pnorm(classes_LP50, mean = media_LP50, sd = desvio_LP50)
 probs_LP50 <- diff(probs_LP50)  
 
-freq_esp_LP50 <- probs_LP50 * n
+freq_esp_LP50 <- probs_LP50 * n_LP50
 
 chisq.test(freq_obs_LP50, p = probs_LP50, rescale.p = TRUE)
 
@@ -111,9 +128,9 @@ desvio_MT200 <- sd(Amostra_g09_200$NOTA_MT)
 probs_MT200 <- pnorm(classes_MT200, mean = media_MT200, sd = desvio_MT200)
 probs_MT200 <- diff(probs_MT200)  
 
-freq_esp_MT200 <- probs_MT200 * n
+freq_esp_MT200 <- probs_MT200 * n_MT200
 
-chisq.test(freq_obs_MT200, p = probs_MT50, rescale.p = TRUE)
+chisq.test(freq_obs_MT200, p = probs_MT200, rescale.p = TRUE)
 
 ## teste para MT -> amostra de 50 
 
@@ -129,7 +146,7 @@ desvio_MT50 <- sd(Amostra_g09_50$NOTA_MT)
 probs_MT50 <- pnorm(classes_MT50, mean = media_MT50, sd = desvio_MT50)
 probs_MT50 <- diff(probs_MT50)  
 
-freq_esp_MT50 <- probs_MT50 * n
+freq_esp_MT50 <- probs_MT50 * n_MT50
 
 chisq.test(freq_obs_MT50, p = probs_MT50, rescale.p = TRUE)
 
@@ -137,9 +154,15 @@ chisq.test(freq_obs_MT50, p = probs_MT50, rescale.p = TRUE)
 
 analise_9a <- Amostra_g09_200[,c(3,6)]
 
+analise_9a50 <- Amostra_g09_50[,c(3,6)]
+
 analise_9a[analise_9a$ADM==1,2] <- "Federal"
 analise_9a[analise_9a$ADM==2,2] <- "Estadual"
 analise_9a[analise_9a$ADM==3,2] <- "Municipal"
+
+analise_9a50[analise_9a50$ADM==1,2] <- "Federal"
+analise_9a50[analise_9a50$ADM==2,2] <- "Estadual"
+analise_9a50[analise_9a50$ADM==3,2] <- "Municipal"
 
 #grafico 9 
 
@@ -154,11 +177,26 @@ a_9a <- analise_9a %>%
     freq_relativa = freq %>% percent()
   )
 
+a_9a50 <- analise_9a50 %>%
+  mutate(ADM = case_when(
+    ADM %>% str_detect("Estadual") ~ "Estadual",
+    ADM %>% str_detect("Municipal") ~ "Municipal"
+  )) %>%
+  group_by(ADM, REG) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
+
 porcentagens <- str_c(a_9a$freq_relativa, "%") %>% str_replace("\\.", ",")
+
+porcentagens_a50 <- str_c(a_9a50$freq_relativa, "%") %>% str_replace("\\.", ",")
 
 legendas <- str_squish(str_c(a_9a$freq, " (", porcentagens, ")"))
 
-ggplot(a_9a) +
+legendas_a50 <- str_squish(str_c(a_9a50$freq, " (", porcentagens, ")"))
+
+grafico9a <- ggplot(a_9a) +
   aes(
     x = fct_reorder(ADM, freq, .desc = T),
     y = freq,
@@ -169,7 +207,24 @@ ggplot(a_9a) +
   geom_text(
     position = position_dodge(width = .9),
     vjust = -0.5, hjust = 0.5,
-    size = 3
+    size = 2
+  ) +
+  labs(x = "Categoria Administrativa", y = "Frequência") +
+  scale_fill_brewer("Região", palette = "Blues") +
+  theme_bw()
+
+grafico9a50 <- ggplot(a_9a50) +
+  aes(
+    x = fct_reorder(ADM, freq, .desc = T),
+    y = freq,
+    fill = REG,
+    label = legendas_a50
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 2
   ) +
   labs(x = "Categoria Administrativa", y = "Frequência") +
   scale_fill_brewer("Região", palette = "Blues") +
@@ -179,11 +234,21 @@ chisq.test(analise_9a$REG, analise_9a$ADM)
 
 x2_9a <- 11.51
 
-C_9a <- sqrt(x2_9 / (x2_9 + 200))
+C_9a <- sqrt(x2_9a / (x2_9a + 200))
 
 Cmax_9a <- sqrt(1/2)
 
-Cmod_9a <- C_9/Cmax_9
+Cmod_9a <- C_9a/Cmax_9a
+
+chisq.test(analise_9a50$REG, analise_9a50$ADM)
+
+x2_9a50 <- 6.98
+
+C_9a50 <- sqrt(x2_9a50 / (x2_9a50 + 200))
+
+Cmax_9a50 <- sqrt(1/2)
+
+Cmod_9a50 <- C_9a50/Cmax_9a50
 
 #associação de fraca a moderada
 
@@ -191,8 +256,13 @@ Cmod_9a <- C_9/Cmax_9
 
 analise_9b <- Amostra_g09_200[,c(5,7)]
 
+analise_9b50 <- Amostra_g09_50[,c(5,7)]
+
 analise_9b$TAM_ESCOLA <- as.character(analise_9b$TAM_ESCOLA)
 analise_9b$TAM_MUN <- as.character(analise_9b$TAM_MUN)
+
+analise_9b50$TAM_ESCOLA <- as.character(analise_9b50$TAM_ESCOLA)
+analise_9b50$TAM_MUN <- as.character(analise_9b50$TAM_MUN)
 
 analise_9b[analise_9b$TAM_ESCOLA==1,2] <- "<25"
 analise_9b[analise_9b$TAM_ESCOLA==2,2] <- "25-49"
@@ -204,6 +274,17 @@ analise_9b[analise_9b$TAM_MUN==2,1] <- "20000-49999"
 analise_9b[analise_9b$TAM_MUN==3,1] <- "50000-99999"
 analise_9b[analise_9b$TAM_MUN==4,1] <- "100000-999999"
 analise_9b[analise_9b$TAM_MUN==5,1] <- "1000000+"
+
+analise_9b50[analise_9b50$TAM_ESCOLA==1,2] <- "<25"
+analise_9b50[analise_9b50$TAM_ESCOLA==2,2] <- "25-49"
+analise_9b50[analise_9b50$TAM_ESCOLA==3,2] <- "50-99"
+analise_9b50[analise_9b50$TAM_ESCOLA==4,2] <- "100+"
+
+analise_9b50[analise_9b50$TAM_MUN==1,1] <- "<20000"
+analise_9b50[analise_9b50$TAM_MUN==2,1] <- "20000-49999"
+analise_9b50[analise_9b50$TAM_MUN==3,1] <- "50000-99999"
+analise_9b50[analise_9b50$TAM_MUN==4,1] <- "100000-999999"
+analise_9b50[analise_9b50$TAM_MUN==5,1] <- "1000000+"
 
 a_9b <- analise_9b %>%
   mutate(TAM_MUN = case_when(
@@ -219,19 +300,37 @@ a_9b <- analise_9b %>%
     freq_relativa = freq %>% percent()
   )
 
-a_9b <- a_9b %>%
-  mutate(TAM_ESCOLA = case_when(
-    TAM_ESCOLA %in% c("<25", "25-49") ~ "<50",  
-    TRUE ~ TAM_ESCOLA  
-  ))
+a_9b50 <- analise_9b50 %>%
+  mutate(TAM_MUN = case_when(
+    TAM_MUN %>% str_detect("<20000") ~ "<20000",
+    TAM_MUN %>% str_detect("20000-49999") ~ "20000-49999",
+    TAM_MUN %>% str_detect("50000-99999") ~ "50000-99999",
+    TAM_MUN %>% str_detect("100000-999999") ~ "100000-999999",
+    TAM_MUN %>% str_detect("1000000+") ~ "1000000+"
+  )) %>%
+  group_by(TAM_MUN, TAM_ESCOLA) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
 
 
 a_9b$TAM_ESCOLA <- factor(a_9b$TAM_ESCOLA, 
-                          levels = c("<50", "50-99", "100+"),
-                          labels = c("<50", "50-99", "100+"),
-                          ordered = TRUE) 
+                          levels = c("<25", "25-49", "50-99", "100+"),
+                          labels = c("<25", "25-49", "50-99", "100+"),
+                          ordered = TRUE)
+
+a_9b50$TAM_ESCOLA <- factor(a_9b50$TAM_ESCOLA, 
+                          levels = c("<25", "25-49", "50-99", "100+"),
+                          labels = c("<25", "25-49", "50-99", "100+"),
+                          ordered = TRUE)
 
 a_9b$TAM_MUN <- factor(a_9b$TAM_MUN, 
+                       levels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       labels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       ordered = TRUE)
+
+a_9b50$TAM_MUN <- factor(a_9b50$TAM_MUN, 
                        levels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
                        labels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
                        ordered = TRUE)
@@ -239,14 +338,24 @@ a_9b$TAM_MUN <- factor(a_9b$TAM_MUN,
 a_9b <- a_9b %>%
   arrange(TAM_MUN, TAM_ESCOLA)
 
+a_9b50 <- a_9b50 %>%
+  arrange(TAM_MUN, TAM_ESCOLA)
+
 a_9b <- a_9b %>%
+  drop_na()
+
+a_9b50 <- a_9b50 %>%
   drop_na()
 
 porcentagens_b <- str_c(a_9b$freq_relativa, "%") %>% str_replace("\\.", ",")
 
+porcentagens_b50 <- str_c(a_9b50$freq_relativa, "%") %>% str_replace("\\.", ",")
+
 legendas_b <- str_squish(str_c(a_9b$freq, " (", porcentagens_b, ")"))
 
-ggplot(a_9b) +
+legendas_b50 <- str_squish(str_c(a_9b50$freq, " (", porcentagens_b50, ")"))
+
+grafico9b200 <- ggplot(a_9b) +
   aes(
     x = TAM_MUN,  
     y = freq,
@@ -257,9 +366,45 @@ ggplot(a_9b) +
   geom_text(
     position = position_dodge(width = .9),
     vjust = -0.5, hjust = 0.5,
-    size = 2.5
+    size = 1.2
   ) +
   labs(x = "Tamanho dos Municípios", y = "Frequência") +
   scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
   theme_bw()
 
+grafico9b50 <- ggplot(a_9b50) +
+  aes(
+    x = TAM_MUN,  
+    y = freq,
+    fill = TAM_ESCOLA,
+    label = legendas_b50
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 1.2
+  ) +
+  labs(x = "Tamanho dos Municípios", y = "Frequência") +
+  scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
+  theme_bw()
+
+chisq.test(analise_9b$TAM_MUN, analise_9b$TAM_ESCOLA)
+
+x2_9b <- 32.87
+
+C_9b <- sqrt(x2_9b / (x2_9b + 200))
+
+Cmax_9b <- sqrt(3/4)
+
+Cmod_9b <- C_9b/Cmax_9b
+
+chisq.test(analise_9b50$TAM_MUN, analise_9b50$TAM_ESCOLA)
+
+x2_9b50 <- 7.95
+
+C_9b50 <- sqrt(x2_9b50 / (x2_9b50 + 200))
+
+Cmax_9b50 <- sqrt(3/4)
+
+Cmod_9b50 <- C_9b50/Cmax_9b50
