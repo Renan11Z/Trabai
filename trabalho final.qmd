@@ -895,6 +895,84 @@ O software utilizado para análise estatística dos dados foi o R versão 4.4.2.
 
 # Resultados 
 
+## Análise 1  
+
+Nesta primeira análises, foi feito uma descritiva das variáveis a fim de compreender melhor as características da amostra.  
+
+```{r}
+#| label: fig-gráfico-1
+#| fig-cap: "Gráfico de setores do local da escola"
+G1
+```
+
+```{r}
+#| label: fig-gráfico-2
+#| fig-cap: "Gráfico de colunas da região da escola"
+G3
+```
+
+```{r}
+#| label: fig-gráfico-3
+#| fig-cap: "Gráfico de setores do tamanho do município"
+G4
+```
+
+```{r}
+#| label: fig-gráfico-4
+#| fig-cap: "Gráfico de setores do tipo de administração da escola"
+G5
+```
+
+```{r}
+#| label: fig-gráfico-5
+#| fig-cap: "Gráfico de setores do tamanho da escola"
+G6
+```
+
+```{r}
+#| label: fig-gráfico-6
+#| fig-cap: "Boxplot do número de matriculados em cada escola "
+G7
+```
+
+```{r}
+#| label: fig-gráfico-1a
+#| fig-cap: "Gráfico de setores do local da escola(amostra de 50)"
+G1A50
+```
+
+```{r}
+#| label: fig-gráfico-2a
+#| fig-cap: "Gráfico de colunas da região da escola(amostra de 50)"
+G3A50
+```
+
+```{r}
+#| label: fig-gráfico-3a
+#| fig-cap: "Gráfico de setores do tamanho do município(amostra de 50)"
+G4A50
+```
+
+```{r}
+#| label: fig-gráfico-4a
+#| fig-cap: "Gráfico de setores do tipo de administração da escola(amostra de 50)"
+G5A50
+```
+
+```{r}
+#| label: fig-gráfico-5a
+#| fig-cap: "Gráfico de setores do tamanho da escola(amostra de 50)"
+G6A50
+```
+
+```{r}
+#| label: fig-gráfico-6a
+#| fig-cap: "Boxplot do número de matriculados em cada escola(amostra de 50)"
+G7A50
+```
+
+Por meio do $\ref{fig-gráfico-1}$ e do $\ref{fig-gráfico-2}$ é possivel ter uma noção da localização das escolas: nota-se que a maioria das escolas são de áreas urbanas e que a maioria Nordeste e do Sudeste. Pelo $\ref{fig-gráfico-3}$, observa-se que predomina escolas em municipios de tamanho 3 (28,5%) seguidos dos de tamanho 2 e 1 (23,5% e 19% respectivamente). Nota-se pelo $\ref{fig-gráfico-4}$ que só há escolas de administração estadual ou municipal na amostra com predominancia das municipais. O $\ref{fig-gráfico-5}$ mostra que prevalece escolas de tamanho 2 e 3, sendo a minoria escolas muito pequenas ou grandes. Finalmente pelo $\ref{fig-gráfico-6}$ observa-se que a maioria das escolas da amostra tem em torno de 50 alunos matriculados, com algumas escolas com quantidades bem maiores. A amostra de 50 tem caracteristicas similares, com os gráficos sendo bem parecidos com os seus correspondentes da amostra de 50.
+
 ## Análise 2
 
 Esta análise tem como intenção estimar a proporção de todas as escolas que obtiveram uma participação média menor que 75% em todas as provas realizadas. Para isso foi utilizada a variável "Participação", sendo esta quantitativa contínua. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.
@@ -905,30 +983,43 @@ O intervalo de confiança de 95% obtido para a proporção média menor que 75% 
 
 Está análise tem como objetivo estimar a média das notas de portugues e matemática na população do estudo. Para isso, foram utilizadas as variáveis "NOTA_LP" e "NOTA_MT", ambas quantitativas contínuas. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.  
 O intervalo de confiança de 95% obtido para a média da nota de português foi $mi_1\in$ (183.76;190.39) e o para a média de matemática foi $mi_2\in$ (202.90;210.65).
-Para a amostra de tamanho 50, por ser uma amostra menor, os intervalos de confiança de 95% para as notas são maiores: para a média da nota de português foi $mi_1\in$ (179.48;194.46) e o para a média de matemática foi $mi_2\in$ (199.82;216.64).
+Para a amostra de tamanho 50, por ser uma amostra menor, os intervalos de confiança de 95% para as notas são maiores: para a média da nota de português foi $mi_1\in$ (179.48;194.46) e o para a média de matemática foi $mi_2\in$ (199.82;216.64).  
 
-##Analise 4  
+## Análise 4  
 
-Nessa análise buscou-se verificar se houve melhora do resultado da Prova Brasil de 2009 para 2011. Na Prova de 2009 a média em língua portuguesa foi de 184.3 e a de matemática foi de 204.3. Para isso foram feitos dois testes de hipótese: 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?   
-Hipóteses do primeiro teste:$H_0) mi_1=184,3$,$H_1)mi_1>184,3$. 
-Estatística do teste: $T=X-184,3/23.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade. 
-Região Crítica para $a$=5%: $mi_1>187.08$
-Conclusão: como a média amostral foi de 187.07, não rejeitaremos $H_0$, entretanto, por estar bem próxima da região crítica, seria necessário estudar mais a fundo para afirmar esse resultado. O P-valor deu 0.0516, que é maior porém bem próximo de  0,05, o que contribui para não rejeitar $H_0$.
+Nessa análise buscou-se verificar se houve melhora do resultado da Prova Brasil de 2009 para 2011. Na Prova de 2009 a média em língua portuguesa foi de 184.3 e a de matemática foi de 204.3. Para isso foram feitos dois testes de hipótese: 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?  
+
+Hipóteses do primeiro teste:$H_0) mi_1=184,3$,$H_1)mi_1>184,3$.  
+
+Estatística do teste: $T=X-184,3/23.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade.  
+
+Região Crítica para $a$=5%: $mi_1>187.08$  
+
+Conclusão: como a média amostral foi de 187.07, não rejeitaremos $H_0$, entretanto, por estar bem próxima da região crítica, seria necessário estudar mais a fundo para afirmar esse resultado. O P-valor deu 0.0516, que é maior porém bem próximo de  0,05, o que contribui para não rejeitar $H_0$.  
 
 Hipóteses do segundo teste:$H_0) mi_1=204.3$,$H_1)mi_1>204.3$.  
+
 Estatística do teste: $T=X-204.3/27.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade.   
-Região Crítica para $a$=5%: $mi_1>207.55$  
+
+Região Crítica para $a$=5%: $mi_1>207.55$   
+
 Conclusão: como a média amostral foi de 206.77, não rejeitaremos $H_0$. O P-valor deu 0.1056 que é maior que 0,05, o que contribui para não rejeitar $H_0$.
 
 Para a Amostra de tamanho 50, o processo foi similar: testes de hipótese: 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?
-Hipóteses do primeiro teste:$H_0) mi_1=184,3 $,$H_1)mi_1>184,3$. 
-Estatística do teste: $T=X-184,3/26.3\div \sqrt{50}$ tem distribuição de student com 49 graus de liberdade. 
-Região Crítica para $a$=5%: $mi_1>190.55$
+Hipóteses do primeiro teste:$H_0) mi_1=184,3 $,$H_1)mi_1>184,3$.   
+
+Estatística do teste: $T=X-184,3/26.3\div \sqrt{50}$ tem distribuição de student com 49 graus de liberdade.  
+
+Região Crítica para $a$=5%: $mi_1>190.55$  
+
 Conclusão: Como a média amostral foi de 186.96, não rejeitamos $H_0$. O P-valor deu aproximadamente 0,2 que é maior que 0,5, o que contribui para não rejeitar $H_0$.
 
-Hipóteses do segundo teste:$H_0) mi_1=204.3$,$H_1)mi_1>204.3$. 
-Estatística do teste: $T=X-204.3/29.5\div \sqrt{50}$ tem distribuição de student com 49 graus de liberdade. 
-Região Critica para $a$=5%: $mi_1>211.31$
+Hipóteses do segundo teste:$H_0) mi_1=204.3$,$H_1)mi_1>204.3$.  
+
+Estatística do teste: $T=X-204.3/29.5\div \sqrt{50}$ tem distribuição de student com 49 graus de liberdade.   
+
+Região Critica para $a$=5%: $mi_1>211.31$  
+
 Conclusão: Como a média amostral foi de 208.23, não rejeitamos $H_0$.
 
 Em suma, em ambas as amostras não houve melhora das notas. O P-valor deu aproximadamente 0,15 que é maior que 0,5, o que contribui para não rejeitar $H_0$.
@@ -991,11 +1082,14 @@ A hipótese nula $H_0$ sugere que não há diferença nas médias das notas entr
 
 Nesta análise comparou-se a proporção das escolas que menos de 75% de seus estudantes participaram da Prova Brasil em 2011 em relação ao local da escola e a região de localização da escola. Para isso foram utilizadas as variáveis "LOCAL" e "REG", ambas qualitativas nominais. Espera-se que as proporções mantenham a proporção geral da amostra. 
 
-```{r}
+```{r} 
+#| label: fig-gráfico-8
+#| fig-cap: "Gráfico de colunas do local pela região das escolas em que menos de 75% dos estudantes participaram da prova"
 GA8
 ```
 
-Como pode ser observado, 80% dessas escolas são da região urbana e a maioria (60%) são do Nordeste ou do Sudeste. O que vai de acordo com a proporção geral, em que 81.5% são da região urbana e 67.5% são da região Nordeste ou Sudeste. Na amostra de 50, só em 4 escolas menos de 75% dos estudantes participaram da Prova Brasil, o que torna extremamente difícil verificar por meio dessa amostra se há uma relação entre a região/local da escola e a baixa adesão dos estudantes na prova.
+
+Observa-se pelo $\ref{fig-gráfico-8}$, 80% dessas escolas são da região urbana e a maioria (60%) são do Nordeste ou do Sudeste. O que vai de acordo com a proporção geral, em que 81.5% são da região urbana e 67.5% são da região Nordeste ou Sudeste. Na amostra de 50, só em 4 escolas menos de 75% dos estudantes participaram da Prova Brasil, o que torna extremamente difícil verificar por meio dessa amostra se há uma relação entre a região/local da escola e a baixa adesão dos estudantes na prova.
 
 ## Análise 9
 

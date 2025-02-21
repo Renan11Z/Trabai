@@ -88,6 +88,8 @@ Em suma, em ambas as amostras não houve melhora das notas. O P-valor deu aproxi
 Nesta análise comparou-se a proporção das escolas que menos de 75% de seus estudantes participaram da Prova Brasil em 2011 em relação ao local da escola e a região de localização da escola. Para isso foram utilizadas as variáveis "LOCAL" e "REG", ambas qualitativas nominais. Espera-se que as proporções mantenham a proporção geral da amostra.
 
 ```{r}
+#| label: fig-gráfico-8
+#| fig-cap: "Gráfico de colunas do local pela região das escolas em que menos de 75% dos estudantes participaram da prova"
 GA8
 ```
 
