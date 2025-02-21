@@ -26,6 +26,14 @@ c_L <- Dados %>%
   mutate(posicao = cumsum(Prop) - 0.5 * Prop,
          ymax = cumsum(Prop),
          ymin = c(0, head(ymax, n=-1)))
+c_LA50 <- Amostra50 %>%
+  group_by(LOCAL) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(LOCAL)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
 
 G1<-ggplot(c_L) +
   aes(x = factor(""), y = Prop , fill = factor(LOCAL)) +
@@ -37,7 +45,15 @@ G1<-ggplot(c_L) +
   theme_void() +
   theme(legend.position = "top") + scale_fill_brewer("Local", palette = "Blues")
 
-
+G1A50<-ggplot(c_LA50) +
+  aes(x = factor(""), y = Prop , fill = factor(LOCAL)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("Local", palette = "Blues")
 
 #####Boxplot das notas
 G2.1<-ggplot(Dados) +
@@ -75,6 +91,17 @@ G3<-ggplot(Dados) +
   ) +
   labs(x = "Região", y = "Frequência Relativa")
 
+G3A50<-ggplot(Amostra50) +
+  aes(x = REG) +
+  geom_bar(aes(y = prop.table(..count..) * 100), fill = "lightblue") +
+  geom_text(aes(
+    y = prop.table(..count..) * 100 + 0.5,
+    label = paste0(gsub("\\.", ",", round(prop.table(..count..) * 100, 2)), "%")
+  ),
+  stat = "count", vjust = 0, size = 4
+  ) +
+  labs(x = "Região", y = "Frequência Relativa")
+
 ###Graf de tam mun
 c_L2 <- Dados %>%
   group_by(TAM_MUN) %>%
@@ -84,8 +111,25 @@ c_L2 <- Dados %>%
   mutate(posicao = cumsum(Prop) - 0.5 * Prop,
          ymax = cumsum(Prop),
          ymin = c(0, head(ymax, n=-1)))
+c_L2A50 <- Amostra50 %>%
+  group_by(TAM_MUN) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(TAM_MUN)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
 
 G4<-ggplot(c_L2) +
+  aes(x = factor(""), y = Prop , fill = factor(TAM_MUN)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("TAM_MUN", palette = "Blues")
+G4A50<-ggplot(c_L2A50) +
   aes(x = factor(""), y = Prop , fill = factor(TAM_MUN)) +
   geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
   geom_text(
@@ -106,7 +150,26 @@ c_L3 <- Dados %>%
          ymax = cumsum(Prop),
          ymin = c(0, head(ymax, n=-1)))
 
+c_L3A50 <- Amostra50 %>%
+  group_by(ADM) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(ADM)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
 G5<-ggplot(c_L3) +
+  aes(x = factor(""), y = Prop , fill = factor(ADM)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("ADM", palette = "Blues")
+
+G5A50<-ggplot(c_L3A50) +
   aes(x = factor(""), y = Prop , fill = factor(ADM)) +
   geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
   geom_text(
@@ -127,7 +190,26 @@ c_L4 <- Dados %>%
          ymax = cumsum(Prop),
          ymin = c(0, head(ymax, n=-1)))
 
+c_L4A50 <- Amostra50 %>%
+  group_by(TAM_ESCOLA) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(TAM_ESCOLA)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
 G6<-ggplot(c_L4) +
+  aes(x = factor(""), y = Prop , fill = factor(TAM_ESCOLA)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("TAM_ESCOLA", palette = "Blues")
+
+G6A50<-ggplot(c_L4A50) +
   aes(x = factor(""), y = Prop , fill = factor(TAM_ESCOLA)) +
   geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
   geom_text(
@@ -139,6 +221,18 @@ G6<-ggplot(c_L4) +
 
 ##matriculados
 G7<-ggplot(Dados) +
+  aes(
+    x = factor(""),
+    y = MATRICULADOS
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = none) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "", y = "Matriculados") 
+
+G7A50<-ggplot(Amostra50) +
   aes(
     x = factor(""),
     y = MATRICULADOS
