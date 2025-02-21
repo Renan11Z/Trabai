@@ -92,7 +92,7 @@ GA8
 ```
 
 
-Como pode ser observado, 80% dessas escolas são da região urbana e a maioria (60%) são do Nordeste ou do Sudeste. O que vai de acordo com a proporção geral, em que 81.5% são da região urbana e 67.5% são da região Nordeste ou Sudeste.
+Como pode ser observado, 80% dessas escolas são da região urbana e a maioria (60%) são do Nordeste ou do Sudeste. O que vai de acordo com a proporção geral, em que 81.5% são da região urbana e 67.5% são da região Nordeste ou Sudeste. Na amostra de 50, só em 4 escolas menos de 75% dos estudantes participaram da Prova Brasil, o que torna extremamente difícil verificar por meio dessa amostra se há uma relação entre a região/local da escola e a baixa adesão dos estudantes na prova.
 
 
 ```{=latex}

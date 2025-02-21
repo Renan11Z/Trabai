@@ -897,9 +897,41 @@ O software utilizado para análise estatística dos dados foi o R versão 4.4.2.
 
 ## Análise 2
 
-Esta análise tem como intenção estimar a proporção de todas as escoals que obtiveram uma participação média menor que 75% em todas as provas realizadas. Para isso foi utilizada a variável "Participação", sendo esta quantitativa contínua. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.
+Esta análise tem como intenção estimar a proporção de todas as escolas que obtiveram uma participação média menor que 75% em todas as provas realizadas. Para isso foi utilizada a variável "Participação", sendo esta quantitativa contínua. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.
 
 O intervalo de confiança de 95% obtido para a proporção média menor que 75% de participação foi $p\in$ (0,04; 0,11) para a amostra com 200 observações e $p\in$ (0; 0,16) para a amostra com 50 observações.
+
+## Análise 3
+
+Está análise tem como objetivo estimar a média das notas de portugues e matemática na população do estudo. Para isso, foram utilizadas as variáveis "NOTA_LP" e "NOTA_MT", ambas quantitativas contínuas. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.  
+O intervalo de confiança de 95% obtido para a média da nota de português foi $mi_1\in$ (183.76;190.39) e o para a média de matemática foi $mi_2\in$ (202.90;210.65).
+Para a amostra de tamanho 50, por ser uma amostra menor, os intervalos de confiança de 95% para as notas são maiores: para a média da nota de português foi $mi_1\in$ (179.48;194.46) e o para a média de matemática foi $mi_2\in$ (199.82;216.64).
+
+##Analise 4  
+
+Nessa análise buscou-se verificar se houve melhora do resultado da Prova Brasil de 2009 para 2011. Na Prova de 2009 a média em língua portuguesa foi de 184.3 e a de matemática foi de 204.3. Para isso foram feitos dois testes de hipótese: 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?   
+Hipóteses do primeiro teste:$H_0) mi_1=184,3$,$H_1)mi_1>184,3$. 
+Estatística do teste: $T=X-184,3/23.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade. 
+Região Crítica para $a$=5%: $mi_1>187.08$
+Conclusão: como a média amostral foi de 187.07, não rejeitaremos $H_0$, entretanto, por estar bem próxima da região crítica, seria necessário estudar mais a fundo para afirmar esse resultado. O P-valor deu 0.0516, que é maior porém bem próximo de  0,05, o que contribui para não rejeitar $H_0$.
+
+Hipóteses do segundo teste:$H_0) mi_1=204.3$,$H_1)mi_1>204.3$.  
+Estatística do teste: $T=X-204.3/27.9\div \sqrt{200}$ tem distribuição de student com 199 graus de liberdade.   
+Região Crítica para $a$=5%: $mi_1>207.55$  
+Conclusão: como a média amostral foi de 206.77, não rejeitaremos $H_0$. O P-valor deu 0.1056 que é maior que 0,05, o que contribui para não rejeitar $H_0$.
+
+Para a Amostra de tamanho 50, o processo foi similar: testes de hipótese: 1°) A nota de língua portuguesa melhorou? 2°) A nota de matemática melhorou?
+Hipóteses do primeiro teste:$H_0) mi_1=184,3 $,$H_1)mi_1>184,3$. 
+Estatística do teste: $T=X-184,3/26.3\div \sqrt{50}$ tem distribuição de student com 49 graus de liberdade. 
+Região Crítica para $a$=5%: $mi_1>190.55$
+Conclusão: Como a média amostral foi de 186.96, não rejeitamos $H_0$. O P-valor deu aproximadamente 0,2 que é maior que 0,5, o que contribui para não rejeitar $H_0$.
+
+Hipóteses do segundo teste:$H_0) mi_1=204.3$,$H_1)mi_1>204.3$. 
+Estatística do teste: $T=X-204.3/29.5\div \sqrt{50}$ tem distribuição de student com 49 graus de liberdade. 
+Região Critica para $a$=5%: $mi_1>211.31$
+Conclusão: Como a média amostral foi de 208.23, não rejeitamos $H_0$.
+
+Em suma, em ambas as amostras não houve melhora das notas. O P-valor deu aproximadamente 0,15 que é maior que 0,5, o que contribui para não rejeitar $H_0$.
 
 ## Análise 5
 
@@ -953,8 +985,17 @@ A hipótese nula $H_0$ propõe que não há diferença no desempenho entre aluno
 
 O objetivo desta análise foi avaliar se existe uma diferença estatisticamente significativa entre as notas de Língua Portuguesa e Matemática dos alunos. Como se tratam das mesmas pessoas avaliadas nas duas disciplinas, foi escolhido o teste para comparação de duas médias pareadas, adequado para amostras dependentes.
 
-A hipótese nula $H_0$ sugere que não há diferença nas médias das notas entre as duas disciplinas, enquanto a hipótese alternativa $H_1$ indica que existe uma diferença significativa. O teste para a amostra de 200 alunos gerou um valor t de -28,28, com 199 graus de liberdade e um p-valor inferior a $2*10^{-16}$, o que é altamente significativo. A diferença média entre as notas foi de -19,70, com intervalo de confiança de 95% variando entre -21,07 e -18,32. Isso confirma que as notas em Língua Portuguesa são significativamente menores que as de Matemática. O boxplot reforça essa diferença, mostrando uma clara disparidade entre as distribuições das duas disciplinas. Para a amostra de 50 alunos, os resultados foram semelhantes, com t = -15,48, com 49 graus de liberdade e p-valor inferior a $2*10^{-16}$, evidenciando uma diferença média de -21,26, com intervalo de confiança entre -24,02 e -18,50. Ambos os testes indicam que a diferença entre as notas de Matemática e Língua Portuguesa é estatisticamente significativa.
+A hipótese nula $H_0$ sugere que não há diferença nas médias das notas entre as duas disciplinas, enquanto a hipótese alternativa $H_1$ indica que existe uma diferença significativa. O teste para a amostra de 200 alunos gerou um valor t de -28,28, com 199 graus de liberdade e um p-valor inferior a $2*10^{-16}$, o que é altamente significativo. A diferença média entre as notas foi de -19,70, com intervalo de confiança de 95% variando entre -21,07 e -18,32. Isso confirma que as notas em Língua Portuguesa são significativamente menores que as de Matemática. O boxplot reforça essa diferença, mostrando uma clara disparidade entre as distribuições das duas disciplinas. Para a amostra de 50 alunos, os resultados foram semelhantes, com t = -15,48, com 49 graus de liberdade e p-valor inferior a $2*10^{-16}$, evidenciando uma diferença média de -21,26, com intervalo de confiança entre -24,02 e -18,50. Ambos os testes indicam que a diferença entre as notas de Matemática e Língua Portuguesa é estatisticamente significativa.  
+  
+## Análise 8  
 
+Nesta análise comparou-se a proporção das escolas que menos de 75% de seus estudantes participaram da Prova Brasil em 2011 em relação ao local da escola e a região de localização da escola. Para isso foram utilizadas as variáveis "LOCAL" e "REG", ambas qualitativas nominais. Espera-se que as proporções mantenham a proporção geral da amostra. 
+
+```{r}
+GA8
+```
+
+Como pode ser observado, 80% dessas escolas são da região urbana e a maioria (60%) são do Nordeste ou do Sudeste. O que vai de acordo com a proporção geral, em que 81.5% são da região urbana e 67.5% são da região Nordeste ou Sudeste. Na amostra de 50, só em 4 escolas menos de 75% dos estudantes participaram da Prova Brasil, o que torna extremamente difícil verificar por meio dessa amostra se há uma relação entre a região/local da escola e a baixa adesão dos estudantes na prova.
 
 ## Análise 9
 
