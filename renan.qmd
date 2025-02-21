@@ -21,16 +21,26 @@ library(tinytex)
 ```
 
 # Desenvolvimento 
+```{r}
+#| label: fig-gráfico-1
+#| fig-cap: "Gráfico de setores do local da escola"
+G1
+```
 
 ```{r}
-G1
+#| label: fig-gráfico-2
+#| fig-cap: "Gráfico de colunas da região da escola"
 G3
+```
+
+```{r}
 G4
 G5
 G6
 G7
 ```
 
+Por meio dos gráficos, é possivel compreender as características gerais da amostra. Observando o $\ref{fig-gráfico-1}$ percebe-se que a maioria das escolas é da zona urbana. Pelo $\ref{fig-gráfico-2}$, observa-se 
 ##Análise 3  
 
 Está análise tem como objetivo estimar a média das notas de portugues e matemática na população do estudo. Para isso, foram utilizadas as variáveis "NOTA_LP" e "NOTA_MT", ambas quantitativas contínuas. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.  
@@ -73,4 +83,25 @@ GA8
 
 
 Como pode ser observado, 80% dessas escolas são da região urbana e a maioria (60%) são do Nordeste ou do Sudeste. O que vai de acordo com a proporção geral, em que 81.5% são da região urbana e 67.5% são da região Nordeste ou Sudeste.
+
+Notas 200:
+```{=latex}
+	\begin{tabular} { | l |
+			S[table-format = 2.2]
+			S[table-format = 2.2]
+			|}
+	\hline
+		\textbf{Estatística} & \textbf{Port} & \textbf{Mat}\\
+		\hline
+		Média & 187.08 & 206.78 \\
+		Desvio Padrão & 23.91 & 27.97 \\
+		Variância & 571.7 & 782.22 \\
+		Mínimo & 129.97 & 140.71 \\
+		1º Quartil & 170.76 & 186.92 \\
+		Mediana & 184.64 & 206.43 \\
+		3º Quartil & 206.14 & 227.12 \\
+		Máximo & 251.18 & 282.63 \\
+	\hline
+	\end{tabular}
+```
 
