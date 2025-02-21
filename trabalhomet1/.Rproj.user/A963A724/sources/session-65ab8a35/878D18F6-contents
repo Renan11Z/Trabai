@@ -1,0 +1,12 @@
+\authors{%
+    Felipe Bretas \\
+    Renan Marques\\
+    Tales Vaz\\
+    Victor Tavares\\
+}
+
+% escreva o nome do cliente aqui
+% se for mais de um separe por \\
+\client{%
+    Maria Teresa
+}
