@@ -22,13 +22,13 @@ library(tinytex)
 
 # Desenvolvimento 
 
-## Estimação da proporção média menor que 75% de participação 
+## Análise 2
 
-Esta análise tem como intenção estimar a proporção de todas as escoals que obtiveram uma participação média menor que 95% em todas as provas realizadas. Para isso foi utilizada a variável "Participação", sendo esta quantitativa contínua. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.
+Esta análise tem como intenção estimar a proporção de todas as escoals que obtiveram uma participação média menor que 75% em todas as provas realizadas. Para isso foi utilizada a variável "Participação", sendo esta quantitativa contínua. Para a construção do intervalo de confiança, foi suposto que ambas as notas seguem uma distribuição normal.
 
 O intervalo de confiança de 95% obtido para a proporção média menor que 75% de participação foi $p\in$ (0,04; 0,11) para a amostra com 200 observações e $p\in$ (0; 0,16) para a amostra com 50 observações.
 
-## As notas de Língua Portuguesa e Matemática são normalmente distribuídas 
+## Análise 5
 
 Nessa análise tem o intuito descobrir se as notas de Língua Portuguesa e Matemática aderem ao modelo de distribuição normal. Foram utilizados para a confecção desta análise as variáveis "Nota Língua Portuguesa" e "Nota Matemática", ambas quantitativas contínuas. Para isso foi necessário estimar a média e a desvio padrão de ambas as matérias, sendo estas, 187,08 de média e 23,91 de desvio padrão para Língua Portuguesa para a amostra de 200 obversavações; 186,97 de média e 26,37 de desvio padrão para Língua Portuguesa para a amostra de 50 observações; 206, 78 de média e 27,97 de desvio padrão para Matemática para a amostra de 200 observações; 208,23 de média e 29,60 de desvio padrão para Matemática para a amostra 50 observações. Para isso foi feito os testes de hipótese: 1°) A Nota de Língua Portuguesa adere a distribuição normal?; 2°) A Nota de Matemática adere a distribuição normal?
 
@@ -68,11 +68,11 @@ Região Crítica para $a$=5%: $X^2_1<0,8312$  e $X^2_2>12,8325$
 
 Conclusão: A estatística do teste obteve um valor de $X^2=1,6651$, assim não rejeitando $H_0$. O p-valor também aponta para a não rejeição de $H_0$, com um valor de 0,8933.
 
-## Verificando se existe associção entre algumas variáveis
+## Análise 9
 
 Esta análise tem como intenção verificar se existe associção entre algumas variáveis presentes na amostra. Sendo assim, esta análise será segmentada em duas a fim de facilitar a compreensão e a leitura. 
 
-### Associação entre região e categoria administrativa
+### Análise 9a)
 
 A fim de verificar a existência de uma associação entre as variáveis "Região", qualitativa nominal, e "Categoria administrativa", qualitativa nominal, foram feitos gráficos a seguir. 
 
@@ -91,7 +91,7 @@ grafico9a50
 
 Como pode ser observado na $\ref{fig-grafico9a200}$ e $\ref{fig-grafico9a50}$, existem mais observações presentes na categoria "Municipal", totalizando 161 observações, mais que o quadrúplo da categoria "Estadual". Vale a pena ser ressaltado que ambas categorias, a região "Sudeste" é a que apresenta mais observações. Na categoria "Municipal", pode-se observar uma grande quantidade de observações na região "Nordeste" com um total de 53. Para verificar a associação entre as variáveis foi utilizado o Coeficiente de Contingência Modificado, este que possui um valor entre 0 e 1 com valores próximos de 0 demonstrando uma associação fraca e valores próximos de 1 uma associação forte. Na análise em questão, obteve um valor de $C^*$=0,33 para a amostra de 200, apresentando uma associação de fraca a moderada entre as variáveis e $C^*$=0,26 para a amostra de 50, apresentando uma associação de fraca a moderada entre as variáveis, mas menor que a amostra de 200.
 
-### Associação entre tamanho da escola e tamanho do município 
+### Análise 9b) 
 
 A fim de verificar a existência de uma associação entre as variáveis "Tamanho do Município", qualitativa ordinal, e "Tamanho da Escola", qualitativa ordinal, foram feitos os gráficos a seguir.
 

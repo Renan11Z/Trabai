@@ -15,44 +15,26 @@ Amostra_g09_50 <- Amostra_g09_200[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
 
 ggplot(Amostra_g09_200) +
   aes(x = NOTA_LP) +
-  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 20) +
   labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
   theme_bw()
 
 ggplot(Amostra_g09_50) +
   aes(x = NOTA_LP) +
-  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 20) +
   labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
   theme_bw()
 
 ggplot(Amostra_g09_200) +
   aes(x = NOTA_MT) +
-  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 20) +
   labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
   theme_bw()
 
 ggplot(Amostra_g09_50) +
   aes(x = NOTA_MT) +
-  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 20) +
   labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
-  theme_bw()
-
-# gráfico de dispersão da participação 
-
-ggplot(Amostra_g09_200, aes(x = PARTICIPACAO, y = ID)) +
-  geom_jitter(colour = "lightblue", size = 3) +
-  labs(
-    x = "Participação",
-    y = "ID das Escolas"
-  )+
-  theme_bw()
-
-ggplot(Amostra_g09_50, aes(x = PARTICIPACAO, y = ID)) +
-  geom_jitter(colour = "lightblue", size = 3) +
-  labs(
-    x = "Participação",
-    y = "ID das Escolas"
-  )+
   theme_bw()
 
 # Análise 2 - Estimar proporção média < 75% de participação
