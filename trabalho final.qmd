@@ -1,5 +1,5 @@
 ---
-title: "Trabalho Final Métodos 1"
+title: "Trabalho Final de Métodos Estatísticos 1"
 
 
 output-file: "trabalho_final"
@@ -7,11 +7,849 @@ output-file: "trabalho_final"
 
 ```{r}
 #| include: false
+
 source("rdocs/source/packages.R")
-source("rdocs/felipe.R")
-source("rdocs/victor.R")
-source("rdocs/renan.R")
+
+#################### Códigos análises 1,2,5,9 #######################
+
+#Banco de dados 
+Amostra_g09_200 <- read_excel(
+  "Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
+Amostra_g09_50 <- Amostra_g09_200[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
+                                    154,147, 145, 144, 143, 141, 139, 132, 127,
+                                    117, 116, 111 , 99, 98, 96, 95, 90, 88, 79,
+                                    78, 77, 68,65,63, 60, 55, 52, 51, 48, 37, 35,
+                                    33, 31, 21, 19, 17, 13, 12, 8, 7, 6),]
+
+# Análise 1 - Análise descritiva das escolas e do desempenhos dos alunos
+
+# gráfico hist das notas
+
+ggplot(Amostra_g09_200) +
+  aes(x = NOTA_LP) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
+  theme_bw()
+
+ggplot(Amostra_g09_50) +
+  aes(x = NOTA_LP) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
+  theme_bw()
+
+ggplot(Amostra_g09_200) +
+  aes(x = NOTA_MT) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
+  theme_bw()
+
+ggplot(Amostra_g09_50) +
+  aes(x = NOTA_MT) +
+  geom_histogram(colour = "white", fill = "lightblue", binwidth = 7) +
+  labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
+  theme_bw()
+
+# gráfico de dispersão da participação 
+
+ggplot(Amostra_g09_200, aes(x = PARTICIPACAO, y = ID)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Participação",
+    y = "ID das Escolas"
+  )+
+  theme_bw()
+
+ggplot(Amostra_g09_50, aes(x = PARTICIPACAO, y = ID)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Participação",
+    y = "ID das Escolas"
+  )+
+  theme_bw()
+
+# Análise 2 - Estimar proporção média < 75% de participação
+
+p200 <- Amostra_g09_200[Amostra_g09_200$PARTICIPACAO<=75,9]
+p75 <- length(p200)/length(Amostra_g09_200$PARTICIPACAO)
+
+p0 <- round((p75 - ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTICIPACAO))
+                     )), 2)
+p1 <- round((p75 + ( 1.96 * sqrt((p75 * (1 - p75))/ length(Amostra_g09_200$PARTICIPACAO))
+)), 2)
+
+
+p50 <- Amostra_g09_50[Amostra_g09_50$PARTICIPACAO<=75,9]
+
+p750 <- length(p50)/length(Amostra_g09_50$PARTICIPACAO)
+
+p00 <- round((p750 - ( 1.96 * sqrt((p750 * (1 - p750))/ length(Amostra_g09_50$PARTICIPACAO))
+)), 2)
+
+p11 <- round((p750 + ( 1.96 * sqrt((p750 * (1 - p750))/ length(Amostra_g09_50$PARTICIPACAO))
+)), 2)
+
+# Análise 5 - LP e MAT são normalmente distribuídas?
+#teste de aderência 
+
+## teste para LP -> amostra de 200 
+classes_LP200 <- seq(min(Amostra_g09_200$NOTA_LP), max(Amostra_g09_200$NOTA_LP),
+                  by = 20)
+
+freq_obs_LP200 <- table(cut(Amostra_g09_200$NOTA_LP, breaks = classes_LP200))
+
+n_LP200 <- length(Amostra_g09_200$NOTA_LP)
+media_LP200 <- mean(Amostra_g09_200$NOTA_LP)
+desvio_LP200 <- sd(Amostra_g09_200$NOTA_LP)
+
+probs_LP200 <- pnorm(classes_LP200, mean = media_LP200, sd = desvio_LP200)
+
+probs_LP200 <- diff(probs_LP200)  
+
+freq_esp_LP200 <- probs_LP200 * n_LP200
+
+chisq.test(freq_obs_LP200, p = probs_LP200, rescale.p = TRUE)
+
+## teste para LP -> amostra de 50 
+classes_LP50 <- seq(min(Amostra_g09_50$NOTA_LP), max(Amostra_g09_50$NOTA_LP),
+                     by = 20)
+
+freq_obs_LP50 <- table(cut(Amostra_g09_50$NOTA_LP, breaks = classes_LP50))
+
+n_LP50 <- length(Amostra_g09_50$NOTA_LP)
+media_LP50 <- mean(Amostra_g09_50$NOTA_LP)
+desvio_LP50 <- sd(Amostra_g09_50$NOTA_LP)
+
+probs_LP50 <- pnorm(classes_LP50, mean = media_LP50, sd = desvio_LP50)
+probs_LP50 <- diff(probs_LP50)  
+
+freq_esp_LP50 <- probs_LP50 * n_LP50
+
+chisq.test(freq_obs_LP50, p = probs_LP50, rescale.p = TRUE)
+
+## teste para MT -> amostra de 200 
+
+classes_MT200 <- seq(min(Amostra_g09_200$NOTA_MT), max(Amostra_g09_200$NOTA_MT),
+                     by = 20)
+
+freq_obs_MT200 <- table(cut(Amostra_g09_200$NOTA_MT, breaks = classes_MT200))
+
+n_MT200 <- length(Amostra_g09_200$NOTA_MT)
+media_MT200 <- mean(Amostra_g09_200$NOTA_MT)
+desvio_MT200 <- sd(Amostra_g09_200$NOTA_MT)
+
+probs_MT200 <- pnorm(classes_MT200, mean = media_MT200, sd = desvio_MT200)
+probs_MT200 <- diff(probs_MT200)  
+
+freq_esp_MT200 <- probs_MT200 * n_MT200
+
+chisq.test(freq_obs_MT200, p = probs_MT200, rescale.p = TRUE)
+
+## teste para MT -> amostra de 50 
+
+classes_MT50 <- seq(min(Amostra_g09_50$NOTA_MT), max(Amostra_g09_50$NOTA_MT),
+                     by = 20)
+
+freq_obs_MT50 <- table(cut(Amostra_g09_50$NOTA_MT, breaks = classes_MT50))
+
+n_MT50 <- length(Amostra_g09_50$NOTA_MT)
+media_MT50 <- mean(Amostra_g09_50$NOTA_MT)
+desvio_MT50 <- sd(Amostra_g09_50$NOTA_MT)
+
+probs_MT50 <- pnorm(classes_MT50, mean = media_MT50, sd = desvio_MT50)
+probs_MT50 <- diff(probs_MT50)  
+
+freq_esp_MT50 <- probs_MT50 * n_MT50
+
+chisq.test(freq_obs_MT50, p = probs_MT50, rescale.p = TRUE)
+
+# Análise 9 - a) associação entre região e categoria administrativa 
+
+analise_9a <- Amostra_g09_200[,c(3,6)]
+
+analise_9a50 <- Amostra_g09_50[,c(3,6)]
+
+analise_9a[analise_9a$ADM==1,2] <- "Federal"
+analise_9a[analise_9a$ADM==2,2] <- "Estadual"
+analise_9a[analise_9a$ADM==3,2] <- "Municipal"
+
+analise_9a50[analise_9a50$ADM==1,2] <- "Federal"
+analise_9a50[analise_9a50$ADM==2,2] <- "Estadual"
+analise_9a50[analise_9a50$ADM==3,2] <- "Municipal"
+
+#grafico 9 
+
+a_9a <- analise_9a %>%
+  mutate(ADM = case_when(
+    ADM %>% str_detect("Estadual") ~ "Estadual",
+    ADM %>% str_detect("Municipal") ~ "Municipal"
+  )) %>%
+  group_by(ADM, REG) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
+
+a_9a50 <- analise_9a50 %>%
+  mutate(ADM = case_when(
+    ADM %>% str_detect("Estadual") ~ "Estadual",
+    ADM %>% str_detect("Municipal") ~ "Municipal"
+  )) %>%
+  group_by(ADM, REG) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
+
+porcentagens <- str_c(a_9a$freq_relativa, "%") %>% str_replace("\\.", ",")
+
+porcentagens_a50 <- str_c(a_9a50$freq_relativa, "%") %>% str_replace("\\.", ",")
+
+legendas <- str_squish(str_c(a_9a$freq, " (", porcentagens, ")"))
+
+legendas_a50 <- str_squish(str_c(a_9a50$freq, " (", porcentagens, ")"))
+
+grafico9a <- ggplot(a_9a) +
+  aes(
+    x = fct_reorder(ADM, freq, .desc = T),
+    y = freq,
+    fill = REG,
+    label = legendas
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 2
+  ) +
+  labs(x = "Categoria Administrativa", y = "Frequência") +
+  scale_fill_brewer("Região", palette = "Blues") +
+  theme_bw()
+
+grafico9a50 <- ggplot(a_9a50) +
+  aes(
+    x = fct_reorder(ADM, freq, .desc = T),
+    y = freq,
+    fill = REG,
+    label = legendas_a50
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 2
+  ) +
+  labs(x = "Categoria Administrativa", y = "Frequência") +
+  scale_fill_brewer("Região", palette = "Blues") +
+  theme_bw()
+
+chisq.test(analise_9a$REG, analise_9a$ADM)
+
+x2_9a <- 11.51
+
+C_9a <- sqrt(x2_9a / (x2_9a + 200))
+
+Cmax_9a <- sqrt(1/2)
+
+Cmod_9a <- C_9a/Cmax_9a
+
+chisq.test(analise_9a50$REG, analise_9a50$ADM)
+
+x2_9a50 <- 6.98
+
+C_9a50 <- sqrt(x2_9a50 / (x2_9a50 + 200))
+
+Cmax_9a50 <- sqrt(1/2)
+
+Cmod_9a50 <- C_9a50/Cmax_9a50
+
+#associação de fraca a moderada
+
+#Analise 9 - b) associação tamanho da escola e tamanho do municipio
+
+analise_9b <- Amostra_g09_200[,c(5,7)]
+
+analise_9b50 <- Amostra_g09_50[,c(5,7)]
+
+analise_9b$TAM_ESCOLA <- as.character(analise_9b$TAM_ESCOLA)
+analise_9b$TAM_MUN <- as.character(analise_9b$TAM_MUN)
+
+analise_9b50$TAM_ESCOLA <- as.character(analise_9b50$TAM_ESCOLA)
+analise_9b50$TAM_MUN <- as.character(analise_9b50$TAM_MUN)
+
+analise_9b[analise_9b$TAM_ESCOLA==1,2] <- "<25"
+analise_9b[analise_9b$TAM_ESCOLA==2,2] <- "25-49"
+analise_9b[analise_9b$TAM_ESCOLA==3,2] <- "50-99"
+analise_9b[analise_9b$TAM_ESCOLA==4,2] <- "100+"
+
+analise_9b[analise_9b$TAM_MUN==1,1] <- "<20000"
+analise_9b[analise_9b$TAM_MUN==2,1] <- "20000-49999"
+analise_9b[analise_9b$TAM_MUN==3,1] <- "50000-99999"
+analise_9b[analise_9b$TAM_MUN==4,1] <- "100000-999999"
+analise_9b[analise_9b$TAM_MUN==5,1] <- "1000000+"
+
+analise_9b50[analise_9b50$TAM_ESCOLA==1,2] <- "<25"
+analise_9b50[analise_9b50$TAM_ESCOLA==2,2] <- "25-49"
+analise_9b50[analise_9b50$TAM_ESCOLA==3,2] <- "50-99"
+analise_9b50[analise_9b50$TAM_ESCOLA==4,2] <- "100+"
+
+analise_9b50[analise_9b50$TAM_MUN==1,1] <- "<20000"
+analise_9b50[analise_9b50$TAM_MUN==2,1] <- "20000-49999"
+analise_9b50[analise_9b50$TAM_MUN==3,1] <- "50000-99999"
+analise_9b50[analise_9b50$TAM_MUN==4,1] <- "100000-999999"
+analise_9b50[analise_9b50$TAM_MUN==5,1] <- "1000000+"
+
+a_9b <- analise_9b %>%
+  mutate(TAM_MUN = case_when(
+    TAM_MUN %>% str_detect("<20000") ~ "<20000",
+    TAM_MUN %>% str_detect("20000-49999") ~ "20000-49999",
+    TAM_MUN %>% str_detect("50000-99999") ~ "50000-99999",
+    TAM_MUN %>% str_detect("100000-999999") ~ "100000-999999",
+    TAM_MUN %>% str_detect("1000000+") ~ "1000000+"
+  )) %>%
+  group_by(TAM_MUN, TAM_ESCOLA) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
+
+a_9b50 <- analise_9b50 %>%
+  mutate(TAM_MUN = case_when(
+    TAM_MUN %>% str_detect("<20000") ~ "<20000",
+    TAM_MUN %>% str_detect("20000-49999") ~ "20000-49999",
+    TAM_MUN %>% str_detect("50000-99999") ~ "50000-99999",
+    TAM_MUN %>% str_detect("100000-999999") ~ "100000-999999",
+    TAM_MUN %>% str_detect("1000000+") ~ "1000000+"
+  )) %>%
+  group_by(TAM_MUN, TAM_ESCOLA) %>%
+  summarise(freq = n()) %>%
+  mutate(
+    freq_relativa = freq %>% percent()
+  )
+
+
+a_9b$TAM_ESCOLA <- factor(a_9b$TAM_ESCOLA, 
+                          levels = c("<25", "25-49", "50-99", "100+"),
+                          labels = c("<25", "25-49", "50-99", "100+"),
+                          ordered = TRUE)
+
+a_9b50$TAM_ESCOLA <- factor(a_9b50$TAM_ESCOLA, 
+                          levels = c("<25", "25-49", "50-99", "100+"),
+                          labels = c("<25", "25-49", "50-99", "100+"),
+                          ordered = TRUE)
+
+a_9b$TAM_MUN <- factor(a_9b$TAM_MUN, 
+                       levels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       labels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       ordered = TRUE)
+
+a_9b50$TAM_MUN <- factor(a_9b50$TAM_MUN, 
+                       levels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       labels = c("<20000", "20000-49999", "50000-99999", "100000-999999", "1000000+"),
+                       ordered = TRUE)
+
+a_9b <- a_9b %>%
+  arrange(TAM_MUN, TAM_ESCOLA)
+
+a_9b50 <- a_9b50 %>%
+  arrange(TAM_MUN, TAM_ESCOLA)
+
+a_9b <- a_9b %>%
+  drop_na()
+
+a_9b50 <- a_9b50 %>%
+  drop_na()
+
+porcentagens_b <- str_c(a_9b$freq_relativa, "%") %>% str_replace("\\.", ",")
+
+porcentagens_b50 <- str_c(a_9b50$freq_relativa, "%") %>% str_replace("\\.", ",")
+
+legendas_b <- str_squish(str_c(a_9b$freq, " (", porcentagens_b, ")"))
+
+legendas_b50 <- str_squish(str_c(a_9b50$freq, " (", porcentagens_b50, ")"))
+
+grafico9b200 <- ggplot(a_9b) +
+  aes(
+    x = TAM_MUN,  
+    y = freq,
+    fill = TAM_ESCOLA,
+    label = legendas_b
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 1.2
+  ) +
+  labs(x = "Tamanho dos Municípios", y = "Frequência") +
+  scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
+  theme_bw()
+
+grafico9b50 <- ggplot(a_9b50) +
+  aes(
+    x = TAM_MUN,  
+    y = freq,
+    fill = TAM_ESCOLA,
+    label = legendas_b50
+  ) +
+  geom_col(position = position_dodge2(preserve = "single", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 1.2
+  ) +
+  labs(x = "Tamanho dos Municípios", y = "Frequência") +
+  scale_fill_brewer("Tamanho da Escola", palette = "Blues") +
+  theme_bw()
+
+chisq.test(analise_9b$TAM_MUN, analise_9b$TAM_ESCOLA)
+
+x2_9b <- 32.87
+
+C_9b <- sqrt(x2_9b / (x2_9b + 200))
+
+Cmax_9b <- sqrt(3/4)
+
+Cmod_9b <- C_9b/Cmax_9b
+
+chisq.test(analise_9b50$TAM_MUN, analise_9b50$TAM_ESCOLA)
+
+x2_9b50 <- 7.95
+
+C_9b50 <- sqrt(x2_9b50 / (x2_9b50 + 200))
+
+Cmax_9b50 <- sqrt(3/4)
+
+Cmod_9b50 <- C_9b50/Cmax_9b50
+
+
+#################### Códigos análises 3,4,8 #######################
+
+
+library(readxl)
+library(ggplot2)
+library(tidyverse)
+library(RColorBrewer)
+library(patchwork)
+
+Dados<-read_excel("Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
+###Analise 1###########
+####Gráfico do Local da escola
+Dados[c(Dados[,4]==1),4]<-"Urbana"
+Dados[c(Dados[,4]==2),4]<-"Rural"
+
+Amostra50 <- Dados[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
+                                    154,147, 145, 144, 143, 141, 139, 132, 127,
+                                    117, 116, 111 , 99, 98, 96, 95, 90, 88, 79,
+                                    78, 77, 68,65,63, 60, 55, 52, 51, 48, 37, 35,
+                                    33, 31, 21, 19, 17, 13, 12, 8, 7, 6),]
+
+c_L <- Dados %>%
+  group_by(LOCAL) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(LOCAL)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+c_LA50 <- Amostra50 %>%
+  group_by(LOCAL) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(LOCAL)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+G1<-ggplot(c_L) +
+  aes(x = factor(""), y = Prop , fill = factor(LOCAL)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("Local", palette = "Blues")
+
+G1A50<-ggplot(c_LA50) +
+  aes(x = factor(""), y = Prop , fill = factor(LOCAL)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("Local", palette = "Blues")
+
+#####Boxplot das notas
+G2.1<-ggplot(Dados) +
+  aes(
+    x = factor(""),
+    y = NOTA_LP
+  ) +
+  geom_boxplot(fill = c("blue"), width = 0.5) +
+  guides(fill = none) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "", y = "Nota") 
+G2.2<-ggplot(Dados) +
+  aes(
+    x = factor(""),
+    y = NOTA_MT
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = none) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "", y = "Nota")
+G2<-G2.1+G2.2
+#######
+G3<-ggplot(Dados) +
+  aes(x = REG) +
+  geom_bar(aes(y = prop.table(..count..) * 100), fill = "lightblue") +
+  geom_text(aes(
+    y = prop.table(..count..) * 100 + 0.5,
+    label = paste0(gsub("\\.", ",", round(prop.table(..count..) * 100, 2)), "%")
+  ),
+  stat = "count", vjust = 0, size = 4
+  ) +
+  labs(x = "Região", y = "Frequência Relativa")
+
+G3A50<-ggplot(Amostra50) +
+  aes(x = REG) +
+  geom_bar(aes(y = prop.table(..count..) * 100), fill = "lightblue") +
+  geom_text(aes(
+    y = prop.table(..count..) * 100 + 0.5,
+    label = paste0(gsub("\\.", ",", round(prop.table(..count..) * 100, 2)), "%")
+  ),
+  stat = "count", vjust = 0, size = 4
+  ) +
+  labs(x = "Região", y = "Frequência Relativa")
+
+###Graf de tam mun
+c_L2 <- Dados %>%
+  group_by(TAM_MUN) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(TAM_MUN)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+c_L2A50 <- Amostra50 %>%
+  group_by(TAM_MUN) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(TAM_MUN)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+G4<-ggplot(c_L2) +
+  aes(x = factor(""), y = Prop , fill = factor(TAM_MUN)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("TAM_MUN", palette = "Blues")
+G4A50<-ggplot(c_L2A50) +
+  aes(x = factor(""), y = Prop , fill = factor(TAM_MUN)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("TAM_MUN", palette = "Blues")
+
+##Graf ADM 
+
+c_L3 <- Dados %>%
+  group_by(ADM) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(ADM)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+c_L3A50 <- Amostra50 %>%
+  group_by(ADM) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(ADM)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+G5<-ggplot(c_L3) +
+  aes(x = factor(""), y = Prop , fill = factor(ADM)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("ADM", palette = "Blues")
+
+G5A50<-ggplot(c_L3A50) +
+  aes(x = factor(""), y = Prop , fill = factor(ADM)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("ADM", palette = "Blues")
+
+##Graf tam esc
+
+c_L4 <- Dados %>%
+  group_by(TAM_ESCOLA) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(TAM_ESCOLA)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+c_L4A50 <- Amostra50 %>%
+  group_by(TAM_ESCOLA) %>%
+  summarise(Freq = n()) %>%
+  mutate(Prop = round(100 * (Freq / sum(Freq)), 2)) %>%
+  arrange(desc(TAM_ESCOLA)) %>%
+  mutate(posicao = cumsum(Prop) - 0.5 * Prop,
+         ymax = cumsum(Prop),
+         ymin = c(0, head(ymax, n=-1)))
+
+G6<-ggplot(c_L4) +
+  aes(x = factor(""), y = Prop , fill = factor(TAM_ESCOLA)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("TAM_ESCOLA", palette = "Blues")
+
+G6A50<-ggplot(c_L4A50) +
+  aes(x = factor(""), y = Prop , fill = factor(TAM_ESCOLA)) +
+  geom_bar(width = 1, stat = "identity") +coord_polar(theta = "y") +
+  geom_text(
+    aes(x = 1.8, y = posicao, label = paste0(Prop, "%")),
+    color = "black"
+  ) +
+  theme_void() +
+  theme(legend.position = "top") + scale_fill_brewer("TAM_ESCOLA", palette = "Blues")
+
+##matriculados
+G7<-ggplot(Dados) +
+  aes(
+    x = factor(""),
+    y = MATRICULADOS
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = none) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "", y = "Matriculados") 
+
+G7A50<-ggplot(Amostra50) +
+  aes(
+    x = factor(""),
+    y = MATRICULADOS
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = none) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "", y = "Matriculados") 
+
+#####################analise 3#########
+#alpha = 0,95
+#Estimador de LP
+miLP <- round((mean(Dados$NOTA_LP) - (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
+msLP <- round((mean(Dados$NOTA_LP) + (1.96 * sd(Dados$NOTA_LP)/sqrt(200))), 2)
+#Amostra50
+AiLP<- round((mean(Amostra50$NOTA_LP) - (2.0096 * sd(Amostra50$NOTA_LP)/sqrt(50))), 2)
+AsLP<- round((mean(Amostra50$NOTA_LP) + (2.0096 * sd(Amostra50$NOTA_LP)/sqrt(50))), 2)
+
+#Estimador de MT
+miMT <- round((mean(Dados$NOTA_MT) - (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
+msMT <- round((mean(Dados$NOTA_MT) + (1.96 * sd(Dados$NOTA_MT)/sqrt(200))), 2)
+#Amostra50
+AiMT<-round((mean(Amostra50$NOTA_MT) - (2.0096 * sd(Amostra50$NOTA_MT)/sqrt(50))), 2)
+AsMT<-round((mean(Amostra50$NOTA_MT) + (2.0096 * sd(Amostra50$NOTA_MT)/sqrt(50))), 2)
+
+#########################Analise 4#########
+((sd(Dados$NOTA_LP)/sqrt(200))*1.645)+(184.3)
+mean(Dados$NOTA_LP)
+((sd(Dados$NOTA_MT)/sqrt(200))*1.645)+(204.3)
+mean(Dados$NOTA_MT)
+
+#Amostra50
+((sd(Amostra50$NOTA_LP)/sqrt(50))*1.6766)+(184.3)
+mean(Amostra50$NOTA_LP)
+((sd(Amostra50$NOTA_MT)/sqrt(50))*1.6766)+(204.3)
+mean(Amostra50$NOTA_MT)
+#############analise 8##################
+D8<-Dados[Dados[,9]<75,]
+c2 <- table(D8$REG, D8$LOCAL)%>%
+  data.frame() %>%
+  mutate(Pct = Freq / sum(Freq))
+
+ordem1=c("NE","SE","N","S","CO")
+ordem2=c("Urbana","Rural")
+
+porcentagens <- str_c(round(c2$Pct*100, digits = 2), "%") %>% str_replace("
+\\.", ",")
+
+legendas <- str_squish(str_c(c2$Freq, " (", porcentagens, ")")
+)
+
+GA8<-ggplot(c2) +
+  aes(
+    x = factor(Var2,level=ordem2),
+    y = Pct,
+    fill = factor(Var1,level=ordem1), label=legendas
+  ) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_brewer(name = "Local") +
+  scale_y_continuous(
+    limits = c(0, .35), expand = c(0, 0), breaks = seq(0, .3, .05),
+    labels = paste0(seq(0, 30, 5), "%")
+  ) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 3
+  )+
+  labs(x = "Local", y = "Frequência Relativa") + theme_bw()
+
+#A5
+D8A5<-Amostra50[Amostra50[,9]<75,]
+c2A5 <- table(D8A5$REG, D8A5$LOCAL)%>%
+  data.frame() %>%
+  mutate(Pct = Freq / sum(Freq))
+
+
+#################### Códigos análises 6,7,10 #######################
+
+
+library(tidyverse)
+library(readxl)
+
+
+dados<-read_excel(
+  "Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
+dados50 <- dados[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
+                   154,147, 145, 144, 143, 141, 139, 132, 127,
+                   117, 116, 111 , 99, 98, 96, 95, 90, 88, 79,
+                   78, 77, 68,65,63, 60, 55, 52, 51, 48, 37, 35,
+                   33, 31, 21, 19, 17, 13, 12, 8, 7, 6),]
+
+# 6. Comparação das notas de Matemática entre escolas urbanas e rurais
+
+## n=200
+t.test(NOTA_MT ~ LOCAL, data = dados)
+dados$LOCAL <- recode(dados$LOCAL, "1" = "Urbana", "2" = "Rural")
+ggplot(dados) +
+  aes(
+    x =dados$LOCAL,
+    y = dados$NOTA_MT
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = FALSE) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "Local", y = "Nota em Matemática") +
+  theme_bw()
+
+## n=50
+t.test(NOTA_MT~ LOCAL, data = dados50)
+dados50$LOCAL <- recode(dados50$LOCAL, "1" = "Urbana", "2" = "Rural")
+ggplot(dados50) +
+  aes(
+    x =dados50$LOCAL,
+    y = dados50$NOTA_MT
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  guides(fill = FALSE) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "Local", y = "Nota em Matemática") +
+  theme_bw()
+
+# 7. Diferença significativa entre notas de Língua Portuguesa e Matemática
+
+## n=200
+t.test(dados$NOTA_LP, dados$NOTA_MT, paired = TRUE)
+variancia_lp <- var(dados$NOTA_LP, na.rm = TRUE)
+variancia_mt <- var(dados$NOTA_MT, na.rm = TRUE)
+
+novo= pivot_longer(dados, cols = c("NOTA_LP", "NOTA_MT"),
+                   names_to = "Disciplina", values_to = "Nota")
+novo$Disciplina= recode(novo$Disciplina,"NOTA_LP"= "Português", "NOTA_MT"="Matemática")
+ggplot(novo) +
+  aes(
+    x = novo$Disciplina,
+    y = novo$Nota
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "Matérias", y = "Notas") +
+  theme_bw()
+
+## n=50
+t.test(dados50$NOTA_LP, dados50$NOTA_MT, paired = TRUE)
+novo50= pivot_longer(dados50, cols = c("NOTA_LP", "NOTA_MT"),
+                   names_to = "Disciplina", values_to = "Nota")
+novo50$Disciplina= recode(novo50$Disciplina,"NOTA_LP"= "Língua Portuguesa", "NOTA_MT"="Matemática")
+ggplot(novo50) +
+  aes(
+    x = novo50$Disciplina,
+    y = novo50$Nota
+  ) +
+  geom_boxplot(fill = c("lightblue"), width = 0.5) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "Matérias", y = "Notas") +
+  theme_bw()
+
+
+# 10. Associação entre notas de Língua Portuguesa e Matemática
+
+## n=200
+cor.test(dados$NOTA_LP, dados$NOTA_MT)
+ggplot(dados, aes(x = dados$NOTA_LP, y = dados$NOTA_MT)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Notas em Português",
+    y = "Notas em Matemática"
+  ) +
+  theme_bw()
+
+## n=50
+cor.test(dados50$NOTA_LP, dados50$NOTA_MT)
+ggplot(dados50, aes(x = dados50$NOTA_LP, y = dados50$NOTA_MT)) +
+  geom_jitter(colour = "lightblue", size = 3) +
+  labs(
+    x = "Notas em Português",
+    y = "Notas em Matemática"
+  ) +
+  theme_bw()
+
 ```
+
 
 # Introdução
 O presente estudo tem como objetivo analisar o desempenho dos estudantes do 5º ano e 9º ano do
@@ -20,8 +858,11 @@ A pesquisa busca descrever as características das escolas participantes e o des
 Os dados foram disponibilizados pelo Inep e se referem às escolas que participaram da Prova Brasil 2011, uma avaliação aplicada pelo Ministério da Educação para diagnosticar o desempenho dos estudantes em redes municipais, estaduais e federais.
 O software utilizado para análise estatistica dos dados foi o R versão 4.4.2.. 0 R é um software de programação gratuito largamente usado na área de estatíistica e visualização de dados que permite não só o manuseio e análise de bancos de dados,como também a confecção de gráficos.
 
+# Objetivos
 
-# Desenvolvimento 
+# Metodologia
+
+# Resultados 
 
 ## Questao6:
 A análise teve como objetivo investigar se existem diferenças significativas no desempenho em Matemática entre alunos de escolas urbanas e rurais. Para isso, foi utilizado o teste para comparação de duas médias, adequado para amostras independentes, uma vez que as variâncias entre os grupos podem ser diferentes.
@@ -39,3 +880,10 @@ A hipótese nula (Ho) propõe que não existe correlação entre as notas de Lí
 
 
 # Conclusões
+
+Portanto, a partir das análises descritivas realizadas foi possível ter uma visão geral dos estudantes e das escolas integrantes da amostra. Na primeira análises, pode-se observar as medidas resumos da proeficiência dos estudantes e gráficos que contribuiram para entender características pertinentes das escolas, não alterando de maneira significativa entre as amostras de tamanho 200 e de 50, sendo importante para uma boa visualização do panorama geral do projeto.
+
+Já em relação a estimação da proporção de escolas com menos de 75% de participação, foi obtido para um intervalo de confiança de 95%, uma proporção de (0,04;0,11), ou 7,5% com erro 3,5% de erro, para as amostras de tamanho 200. Já para amostras de tamnho 50, teve a proporção de (0,00;0,16), ou 8% com margem de erro de 8%.
+
+Ao se estimar a proeficiência média dos alunos nas máterias de português, foi obtido para um intervalo de confiança de 95%, uma média de (183,76;190,30) para amostras de tamanho 200, e para amostras de tamanho 50, o intervalo foi de (179,48;194,46). Foi estimado também a proeficiência média em matemática, onde foi obtido um intervalo de (202,90;210,65) para amostras de tamanho 200, e para amostras de tamanho 50, o intervalor foi de (199,82;216,64). Pode-se observar que as notas médias de português estimadas foram menor que as notas de matemática em ambas amostras e que, amostras de tamanho menor possuem um intervalo maior para um mesmo intervalo de confiaça.
+
