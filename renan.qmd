@@ -40,6 +40,16 @@ G6
 G7
 ```
 
+```{r}
+G1A50
+G3A50
+G4A50
+G5A50
+G6A50
+G7A50
+```
+
+
 Por meio dos gráficos, é possivel compreender as características gerais da amostra. Observando o $\ref{fig-gráfico-1}$ percebe-se que a maioria das escolas é da zona urbana. Pelo $\ref{fig-gráfico-2}$, observa-se 
 ##Análise 3  
 
@@ -84,14 +94,14 @@ GA8
 
 Como pode ser observado, 80% dessas escolas são da região urbana e a maioria (60%) são do Nordeste ou do Sudeste. O que vai de acordo com a proporção geral, em que 81.5% são da região urbana e 67.5% são da região Nordeste ou Sudeste.
 
-Notas 200:
+
 ```{=latex}
 	\begin{tabular} { | l |
 			S[table-format = 2.2]
 			S[table-format = 2.2]
 			|}
 	\hline
-		\textbf{Estatística} & \textbf{Port} & \textbf{Mat}\\
+		\textbf{Estatística} & \textbf{Port} & \textbf{Mat} \\
 		\hline
 		Média & 187.08 & 206.78 \\
 		Desvio Padrão & 23.91 & 27.97 \\
@@ -101,6 +111,26 @@ Notas 200:
 		Mediana & 184.64 & 206.43 \\
 		3º Quartil & 206.14 & 227.12 \\
 		Máximo & 251.18 & 282.63 \\
+	\hline
+	\end{tabular}
+```
+
+```{=latex}
+	\begin{tabular} { | l |
+			S[table-format = 2.2]
+			S[table-format = 2.2]
+			|}
+	\hline
+		\textbf{Estatística} & \textbf{Port} & \textbf{Mat} \\
+		\hline
+		Média & 186.97 & 208.23 \\
+		Desvio Padrão & 26.36 & 29.6 \\
+		Variância & 695.1 & 876.05 \\
+		Mínimo & 132.28 & 151.58 \\
+		1º Quartil & 170.52 & 186.24 \\
+		Mediana & 188.21 & 208.66 \\
+		3º Quartil & 204.05 & 227.51 \\
+		Máximo & 251.18 & 281.78 \\
 	\hline
 	\end{tabular}
 ```
