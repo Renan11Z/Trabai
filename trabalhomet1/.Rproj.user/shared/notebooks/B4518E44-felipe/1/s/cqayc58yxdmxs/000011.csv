@@ -1,0 +1,19 @@
+"0","grafico9b50 <- ggplot(a_9b50) +
+  aes(
+    x = TAM_MUN,  
+    y = freq,
+    fill = TAM_ESCOLA,
+    label = legendas_b50
+  ) +
+  geom_col(position = position_dodge2(preserve = ""single"", padding = 0)) +
+  geom_text(
+    position = position_dodge(width = .9),
+    vjust = -0.5, hjust = 0.5,
+    size = 1.2
+  ) +
+  labs(x = ""Tamanho dos Municípios"", y = ""Frequência"") +
+  scale_fill_brewer(""Tamanho da Escola"", palette = ""Blues"") +
+  theme_bw()
+"
+"2","Erro: objeto 'a_9b50' não encontrado
+"

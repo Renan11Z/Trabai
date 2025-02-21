@@ -37,6 +37,8 @@ G1<-ggplot(c_L) +
   theme_void() +
   theme(legend.position = "top") + scale_fill_brewer("Local", palette = "Blues")
 
+
+
 #####Boxplot das notas
 G2.1<-ggplot(Dados) +
   aes(

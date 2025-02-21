@@ -1,0 +1,20 @@
+---
+title: "Trabalho Final Métodos 1"
+
+
+output-file: "trabalho_final"
+---
+
+```{r}
+#| include: false
+source("rdocs/source/packages.R")
+source("rdocs/felipe.R")
+source("rdocs/victor.R")
+source("rdocs/renan.R")
+```
+
+# Introdução
+
+# Desenvolvimento 
+
+# Conclusões

@@ -1,5 +1,7 @@
 source("rdocs/source/packages.R")
 library(tidyverse)
+library(readxl)
+
 
 dados<-read_excel(
   "Amostra_g09_FelipeBretas_Renan_Tales_VictorSouza.xlsx")
@@ -26,9 +28,6 @@ ggplot(dados) +
   ) +
   labs(x = "Local", y = "Nota em Matemática") +
   theme_bw()
-
-dadost1<-dados[dados[,4]=="Urbana",]
-dadost2<-dados[dados[,4]=="Rural",]
 
 ## n=50
 t.test(NOTA_MT~ LOCAL, data = dados50)
@@ -67,8 +66,6 @@ ggplot(novo) +
   ) +
   labs(x = "Matérias", y = "Notas") +
   theme_bw()
-
-
 
 ## n=50
 t.test(dados50$NOTA_LP, dados50$NOTA_MT, paired = TRUE)
