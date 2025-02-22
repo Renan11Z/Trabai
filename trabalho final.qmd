@@ -1152,4 +1152,12 @@ Já em relação a estimação da proporção de escolas com menos de 75% de par
 
 Ao se estimar a proficiência média dos alunos nas matérias de português, foi obtido para um intervalo de confiança de 95%, uma média de (183,76;190,30) para amostras de tamanho 200, e para amostras de tamanho 50, o intervalo foi de (179,48;194,46). Foi estimado também a proficiência média em matemática, onde foi obtido um intervalo de (202,90;210,65) para amostras de tamanho 200, e para amostras de tamanho 50, o intervalor foi de (199,82;216,64). Pode-se observar que as notas médias de português estimadas foram menor que as notas de matemática em ambas amostras e que, amostras de tamanho menor possuem um intervalo maior para um mesmo intervalo de confiança.
 
+Na próxima análise verificou-se a melhora das notas da Prova Brasil entre o ano de 2009 e 2011, no qual foram feitos testes de comparação de médias, resultando na não rejeição das hipóteses que as notas de português se mantiveram, sendo o p-valor de 0,516 na amostra de tamanho 200 e com o p-valor de aproximadamente 0,2 na amostra de 50. Já em matemática, as hipósteses que a médias se mativeram iguais também não foram reijeitadas, onde se obteve para amostras de tamanho 200 o p-valor de 0,1056 e na de 50 o p-valor de aproximadamente 0,15
+
+Pode-se verificar também se as notas de português e matemática seguem a distribuição normal, para isso foi feito o teste de Qui-Quadrado de Aderência chegando no resultado que, as notas de português e matemática na amostra de tamanho 200 e as notas de português e matemática na amostra de tamanho 50, possuem o p-valor de 0,3816; 0,6627; 0,4651; 0,8933 respectivamente para a não rejeição da hipótese que sejam normalmente distribuídas, para um nível de significância de 5%. Portando, chegando na conclusão que elas possuem uma distribuição normal.
+
+Ao comparar as notas dos alunos em diferentes locais, sendo dividindo em urbano e rural, observou-se uma discrepância na proeficiência média entre eles, possuindo médias de aproximadamente 15 pontos de diferença dependendo apenas do local da escola, para se confirmar se existe tal diferença, foi feito o teste de comparação de médias e chegou-se na conclusão da rejeição da hipótese que as médias seriam iguais, com um p-valor abaixo de 0,001, tanto para amostras de tamanho 200 e de 50 escolas, indicando assiim, que a nota média entre as areas urbanas e rurais são sim diferentes entre si.
+
+
+
 
