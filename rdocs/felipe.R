@@ -13,25 +13,25 @@ Amostra_g09_50 <- Amostra_g09_200[c(198, 196, 190, 189, 186, 173, 171, 169, 167,
 
 # gráfico hist das notas
 
-ggplot(Amostra_g09_200) +
+G8<-ggplot(Amostra_g09_200) +
   aes(x = NOTA_LP) +
   geom_histogram(colour = "white", fill = "lightblue", binwidth = 20) +
   labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
   theme_bw()
 
-ggplot(Amostra_g09_50) +
+G9<-ggplot(Amostra_g09_50) +
   aes(x = NOTA_LP) +
   geom_histogram(colour = "white", fill = "lightblue", binwidth = 20) +
   labs(x = "Notas Língua Portuguesa", y = "Frequência Absoluta") + 
   theme_bw()
 
-ggplot(Amostra_g09_200) +
+G8A50<-ggplot(Amostra_g09_200) +
   aes(x = NOTA_MT) +
   geom_histogram(colour = "white", fill = "lightblue", binwidth = 20) +
   labs(x = "Notas Matemática", y = "Frequência Absoluta") + 
   theme_bw()
 
-ggplot(Amostra_g09_50) +
+G9A50<-ggplot(Amostra_g09_50) +
   aes(x = NOTA_MT) +
   geom_histogram(colour = "white", fill = "lightblue", binwidth = 20) +
   labs(x = "Notas Matemática", y = "Frequência Absoluta") + 

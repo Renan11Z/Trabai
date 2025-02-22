@@ -951,6 +951,41 @@ G7
 ```
 
 ```{r}
+#| label: fig-gráfico-7
+#| fig-cap: "Histograma das notas de português"
+G8
+```
+
+```{r}
+#| label: fig-gráfico-8
+#| fig-cap: "Histograma das notas de matemática"
+G9
+```
+
+:::{#quad-resumo1 layout-align="center" quad-pos="H"}
+```{=latex}
+	\begin{tabular} { | l |
+			S[table-format = 2.2]
+			S[table-format = 2.2]
+			|}
+	\hline
+		\textbf{Estatística} & \textbf{Port} & \textbf{Mat} \\
+		\hline
+		Média & 187.08 & 206.78 \\
+		Desvio Padrão & 23.91 & 27.97 \\
+		Variância & 571.7 & 782.22 \\
+		Mínimo & 129.97 & 140.71 \\
+		1º Quartil & 170.76 & 186.92 \\
+		Mediana & 184.64 & 206.43 \\
+		3º Quartil & 206.14 & 227.12 \\
+		Máximo & 251.18 & 282.63 \\
+	\hline
+	\end{tabular}
+```
+Medidas resumo das notas 
+:::
+
+```{r}
 #| label: fig-gráfico-1a
 #| fig-cap: "Gráfico de setores do local da escola(amostra de 50)"
 G1A50
@@ -986,7 +1021,42 @@ G6A50
 G7A50
 ```
 
-Por meio do $\ref{fig-gráfico-1}$ e do $\ref{fig-gráfico-2}$ é possivel ter uma noção da localização das escolas: nota-se que a maioria das escolas são de áreas urbanas e que a maioria Nordeste e do Sudeste. Pelo $\ref{fig-gráfico-3}$, observa-se que predomina escolas em municipios de tamanho 3 (28,5%) seguidos dos de tamanho 2 e 1 (23,5% e 19% respectivamente). Nota-se pelo $\ref{fig-gráfico-4}$ que só há escolas de administração estadual ou municipal na amostra com predominancia das municipais. O $\ref{fig-gráfico-5}$ mostra que prevalece escolas de tamanho 2 e 3, sendo a minoria escolas muito pequenas ou grandes. Finalmente pelo $\ref{fig-gráfico-6}$ observa-se que a maioria das escolas da amostra tem em torno de 50 alunos matriculados, com algumas escolas com quantidades bem maiores. A amostra de 50 tem caracteristicas similares, com os gráficos sendo bem parecidos com os seus correspondentes da amostra de 50.
+```{r}
+#| label: fig-gráfico-7a
+#| fig-cap: "Histograma das notas de português da amostra de 50"
+G8A50
+```
+
+```{r}
+#| label: fig-gráfico-8a
+#| fig-cap: "Histograma das notas de matemática da amostra de 50"
+G9A50
+```
+
+:::{#quad-resumo2 layout-align="center" quad-pos="H"}
+```{=latex}
+	\begin{tabular} { | l |
+			S[table-format = 2.2]
+			S[table-format = 2.2]
+			|}
+	\hline
+		\textbf{Estatística} & \textbf{Port} & \textbf{Mat} \\
+		\hline
+		Média & 186.97 & 208.23 \\
+		Desvio Padrão & 26.36 & 29.6 \\
+		Variância & 695.1 & 876.05 \\
+		Mínimo & 132.28 & 151.58 \\
+		1º Quartil & 170.52 & 186.24 \\
+		Mediana & 188.21 & 208.66 \\
+		3º Quartil & 204.05 & 227.51 \\
+		Máximo & 251.18 & 281.78 \\
+	\hline
+	\end{tabular}
+```
+Medidas resumo das notas da amostra de 50
+:::
+
+Por meio do $\ref{fig-gráfico-1}$ e do $\ref{fig-gráfico-2}$ é possivel ter uma noção da localização das escolas: nota-se que a maioria das escolas são de áreas urbanas e que a maioria Nordeste e do Sudeste. Pelo $\ref{fig-gráfico-3}$, observa-se que predomina escolas em municipios de tamanho 3 (28,5%) seguidos dos de tamanho 2 e 1 (23,5% e 19% respectivamente). Nota-se pelo $\ref{fig-gráfico-4}$ que só há escolas de administração estadual ou municipal na amostra com predominancia das municipais. O $\ref{fig-gráfico-5}$ mostra que prevalece escolas de tamanho 2 e 3, sendo a minoria escolas muito pequenas ou grandes. Além disso, os gráfios $\ref{fig-gráfico-7}$ e $\ref{fig-gráfico-8}$ e o [**Quadro** @quad-resumo1] mostram as distribuições das notas de português e matemática, com as notas de matemática sendo maiores que as de português. Finalmente pelo $\ref{fig-gráfico-6}$ observa-se que a maioria das escolas da amostra tem em torno de 50 alunos matriculados, com algumas escolas com quantidades bem maiores. A amostra de 50 tem caracteristicas similares, com os gráficos sendo bem parecidos com os seus correspondentes da amostra de 50.
 
 ## Análise 2
 
