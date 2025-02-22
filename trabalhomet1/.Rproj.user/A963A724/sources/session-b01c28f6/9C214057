@@ -3,7 +3,7 @@
     "path": "~/GitHub/Trabai/trabalho final.qmd",
     "project_path": null,
     "type": "quarto_markdown",
-    "hash": "1050882791",
+    "hash": "2510855900",
     "contents": "",
     "dirty": false,
     "created": 1740151715946.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "1160,0",
-        "scrollLine": "1153"
+        "cursorPosition": "1166,411",
+        "scrollLine": "1159"
     },
     "folds": "",
-    "lastKnownWriteTime": 1740202463,
+    "lastKnownWriteTime": 1740230738,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1740202463996,
+    "last_content_update": 1740230738255,
     "read_only": false,
     "read_only_alternatives": []
 }
