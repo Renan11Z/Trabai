@@ -854,12 +854,21 @@ ggplot(dados50, aes(x = dados50$NOTA_LP, y = dados50$NOTA_MT)) +
 
 # Introdução
 
-O presente estudo tem como objetivo analisar o desempenho dos estudantes do 5º ano e 9º ano do Ensino Fundamental e 3ª série do Ensino Médio na Prova Brasil de 2011. Para isso, foi utilizada uma amostra aleatória simples de 200 escolas, extraída do banco de dados dos resultados da avaliação. Além disso, foi selecionada uma subamostra de 50 escolas para comparação dos resultados obtidos.
+O INEP,  Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira, realizou em 2011 a décima primeira edição do Saeb; Sistema de Avaliação da Educação Básica. Essa prova ocorre a cada dois anos desde 1990 e tem como objetivo principal fazer um diagnóstico dos sistemas educacionais brasileiros a fim de subsidiar a formulação, reformulação e monitoramento de políticas públicas, contribuindo na qualidade do ensino de todo o país. Para isso são realizados testes para os jovens do 5º ano do fundamental I,  9º ano do fundamental II e 3ª série do Ensino Médio. 
 
-A pesquisa busca descrever as características das escolas participantes e o desempenho médio dos alunos. Entre os principais focos da análise estão a estimativa da nota média em Língua Portuguesa e Matemática, a verificação da normalidade das distribuições das notas e a comparação da proficiência em Matemática segundo o local da escola (urbana ou rural). Além disso, o estudo examina a evolução do desempenho entre 2009 e 2011 e investiga possíveis associações entre variáveis como região, categoria administrativa, tamanho da escola e tamanho do município. Para os testes de hipóteses foi utilizado um nível de significância de 5%. Os dados foram disponibilizados pelo Inep e se referem às escolas que participaram da Prova Brasil 2011, uma avaliação aplicada pelo Ministério da Educação para diagnosticar o desempenho dos estudantes em redes municipais, estaduais e federais.
+A patir de 2005, o Saeb foi reestruturado, passando a possuir duas avaliações: Avaliação Nacional da Educação Básica (Aneb) e
+Avaliação Nacional do Rendimento Escolar (Anresc), mais conhecido como Prova Brasil. Participam desta avaliação as escolas que atendem os critérios de quantidade mínima de estudantes nas séries mencionadas anteriormente, permitindo assim gerar resultatodos por escola. A Prova Brasil de 2011, o objeto de estudo deste relatório, avaliou todas as escolas com pelo menos 20 estudantes matriculados  5º Ano e 9º Ano do ensino fundamental regular, matriculados, em escolas públicas, localizadas em zona urbana e rural. A Prova Brasil 2011 avaliou censitariamente 56.222 escolas, totalizando 4.286.276 de
+alunos participantes. A parte amostral do SAEB é o Aneb, responsável por manter os procedimentos da avaliação amostral das redes públicas e privadas. A parte amostral em 2011 foi composta por:
 
-O software utilizado para análise estatística dos dados foi o R versão 4.4.2. 0 R é um software de programação gratuito largamente usado na área de estatística e visualização de dados que permite não só o manuseio e análise de bancos de dados, como também a confecção de gráficos.
+I. escolas que tenham de 10 a 19 estudantes matriculados no 5º ano ou 9º ano do ensino fundamental regular e público;
 
+II. escolas que tenham 10 ou mais estudantes matriculados no 5º ano ou 9º ano do ensino fundamental regular e privado;
+
+III. escolas que tenham 10 ou mais estudantes matriculados na 3ª série do ensino médio regular público ou privado.
+
+Para interpretar os dados, é preciso observar o desempenho na Escala de Proficiência do SAEB, se organizando por área de conhecimento: Língua Portuguesa e Matemática e por etapa avaliada.
+
+Esta pesquisa deseja analisar o desempenho de estudantes do 5º ano do Ensino Fundamental de escolas públicas brasileiras em 2011 com base em duas amostras aleatórias simples, uma de 200  escolas e outra de 50 escolas, extraídas do banco de dados dos resultados da Prova Brasil. 
 
 # Objetivos
 
@@ -892,6 +901,12 @@ O software utilizado para análise estatística dos dados foi o R versão 4.4.2.
 ## Verificar se a nota em Língua Portuguesa é um bom indicador para predizer a nota existe em Matemática, ou seja se estão associadas.
 
 # Metodologia
+
+O presente estudo tem como objetivo analisar o desempenho dos estudantes do 5º ano e 9º ano do Ensino Fundamental e 3ª série do Ensino Médio na Prova Brasil de 2011. Para isso, foi utilizada uma amostra aleatória simples de 200 escolas, extraída do banco de dados dos resultados da avaliação. Além disso, foi selecionada uma subamostra de 50 escolas para comparação dos resultados obtidos.
+
+A pesquisa busca descrever as características das escolas participantes e o desempenho médio dos alunos. Entre os principais focos da análise estão a estimativa da nota média em Língua Portuguesa e Matemática, a verificação da normalidade das distribuições das notas e a comparação da proficiência em Matemática segundo o local da escola (urbana ou rural). Além disso, o estudo examina a evolução do desempenho entre 2009 e 2011 e investiga possíveis associações entre variáveis como região, categoria administrativa, tamanho da escola e tamanho do município. Para os testes de hipóteses foi utilizado um nível de significância de 5%. Os dados foram disponibilizados pelo Inep e se referem às escolas que participaram da Prova Brasil 2011, uma avaliação aplicada pelo Ministério da Educação para diagnosticar o desempenho dos estudantes em redes municipais, estaduais e federais.
+
+O software utilizado para análise estatística dos dados foi o R versão 4.4.2. 0 R é um software de programação gratuito largamente usado na área de estatística e visualização de dados que permite não só o manuseio e análise de bancos de dados, como também a confecção de gráficos.
 
 # Resultados 
 
